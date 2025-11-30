@@ -22,17 +22,17 @@ from . import views
 import farmer.views as fviews
 import company.views as cviews
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.home),
-    path('company_login/', views.com_login),
-    # path('farmer_login/', views.frm_login),
-    path('volunteer_login/', views.vol_login),
-    # path('registration_company/', views.reg_com, name='reg_com'),
+    path('a/', admin.site.urls),
+    path('company_login/', views.com_login, name='com_login'),
+    path('farmer_login/', views.frm_login, name='frm_login'),
+    path('volunteer_login/', views.vol_login, name='vol_login'),
     path('registration_farmer/', views.reg_frm, name='reg_frm'),
-    # path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
-    # path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
     path('company_dashboard/', cviews.com_dashboard, name='dash_com'),
     path('farmer_register/', fviews.register_farmer, name='register_farmer'),
+    # path('registration_company/', views.reg_com, name='reg_com'),
+    # path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
+    # path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)

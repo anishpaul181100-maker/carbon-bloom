@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div id="app" class="w-full h-full flex items-center justify-center p-6">
+   <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+     <div class="mb-4 flex justify-center">
+      <svg class="w-20 h-20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="#10b981" opacity="0.2"></circle> <path d="M50 20 L60 35 L75 35 L62 48 L68 63 L50 53 L32 63 L38 48 L25 35 L40 35 Z" fill="#10b981"></path> <rect x="47" y="55" width="6" height="20" fill="#10b981"></rect> <path d="M30 75 Q50 70 70 75" stroke="#10b981" stroke-width="3" fill="none"></path>
+      </svg>
+     </div>
+     <h1 id="page-title" class="text-4xl font-bold mb-2">Farmer Portal</h1>
+     <p id="page-subtitle" class="text-lg">Access your agricultural dashboard</p>
+    </div>
+    <div class="rounded-lg shadow-lg p-8">
+     <form id="login-form">
+      <div class="mb-6"><label for="user-id" id="user-id-label" class="block text-sm font-semibold mb-2">Farmer ID</label> <input type="text" id="user-id" class="w-full px-4 py-3 rounded-lg border-2 focus:outline-none focus:border-green-500 transition-colors" placeholder="Enter your farmer ID" required="">
+      </div>
+      <div class="mb-6"><label for="name" id="name-label" class="block text-sm font-semibold mb-2">Full Name</label> <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border-2 focus:outline-none focus:border-green-500 transition-colors" placeholder="Enter your full name" required="">
+      </div>
+      <div class="mb-8"><label for="password" id="password-label" class="block text-sm font-semibold mb-2">Password</label>
+       <div class="relative"><input type="password" id="password" class="w-full px-4 py-3 pr-12 rounded-lg border-2 focus:outline-none focus:border-green-500 transition-colors" placeholder="Enter your password" required=""> <button type="button" id="toggle-password" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+         <svg id="eye-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+         </svg>
+         <svg id="eye-slash-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+         </svg></button>
+       </div>
+      </div><button type="submit" id="login-button" class="w-full py-3 px-6 rounded-lg font-semibold text-lg transition-all transform hover:scale-105 hover:shadow-xl"> Login to Portal </button>
+     </form>
+     <div id="success-message" class="mt-6 p-4 rounded-lg hidden">
+      <p class="text-center font-semibold">? Login successful! Welcome back, <span id="welcome-name"></span></p>
+     </div>
+    </div>
+    <p id="footer-text" class="text-center text-sm mt-6">Secure access for registered farmers only</p>
+   </div>
+  </div>
+
+    <script>
+        const defaultConfig = {
+        background_color: "#f0fdf4",
+        surface_color: "#ffffff",
+        text_color: "#166534",
+        primary_action_color: "#10b981",
+        secondary_action_color: "#059669",
+        font_family: "system-ui",
+        font_size: 16,
+        page_title: "Farmer Login",
+        page_subtitle: "Access your agricultural dashboard",
+        user_id_label: "Farmer ID",
+        name_label: "Full Name",
+        password_label: "Password",
+        button_text: "Login to Portal",
+        footer_text: "Secure access for registered farmers only"
+        };
+
+        const config = {};
+
+        async function onConfigChange(config) {
+        const backgroundColor = config.background_color || defaultConfig.background_color;
+        const surfaceColor = config.surface_color || defaultConfig.surface_color;
+        const textColor = config.text_color || defaultConfig.text_color;
+        const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+        const customFont = config.font_family || defaultConfig.font_family;
+        const baseFontSize = config.font_size || defaultConfig.font_size;
+        const baseFontStack = 'system-ui, -apple-system, sans-serif';
+
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        
+        const app = document.getElementById('app');
+        app.style.color = textColor;
+        
+        const formContainer = document.querySelector('.rounded-lg.shadow-lg');
+        formContainer.style.backgroundColor = surfaceColor;
+        
+        const title = document.getElementById('page-title');
+        title.textContent = config.page_title || defaultConfig.page_title;
+        title.style.color = textColor;
+        title.style.fontSize = `${baseFontSize * 2}px`;
+        title.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        
+        const subtitle = document.getElementById('page-subtitle');
+        subtitle.textContent = config.page_subtitle || defaultConfig.page_subtitle;
+        subtitle.style.color = textColor;
+        subtitle.style.fontSize = `${baseFontSize * 1.125}px`;
+        subtitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        
+        const userIdLabel = document.getElementById('user-id-label');
+        userIdLabel.textContent = config.user_id_label || defaultConfig.user_id_label;
+        userIdLabel.style.color = textColor;
+        userIdLabel.style.fontSize = `${baseFontSize * 0.875}px`;
+        
+        const nameLabel = document.getElementById('name-label');
+        nameLabel.textContent = config.name_label || defaultConfig.name_label;
+        nameLabel.style.color = textColor;
+        nameLabel.style.fontSize = `${baseFontSize * 0.875}px`;
+        
+        const passwordLabel = document.getElementById('password-label');
+        passwordLabel.textContent = config.password_label || defaultConfig.password_label;
+        passwordLabel.style.color = textColor;
+        passwordLabel.style.fontSize = `${baseFontSize * 0.875}px`;
+        
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.style.borderColor = textColor;
+            input.style.color = textColor;
+            input.style.fontSize = `${baseFontSize}px`;
+            input.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        });
+        
+        const button = document.getElementById('login-button');
+        button.textContent = config.button_text || defaultConfig.button_text;
+        button.style.backgroundColor = primaryActionColor;
+        button.style.color = surfaceColor;
+        button.style.fontSize = `${baseFontSize * 1.125}px`;
+        button.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        
+        const successMessage = document.getElementById('success-message');
+        successMessage.style.backgroundColor = `${primaryActionColor}20`;
+        successMessage.style.color = textColor;
+        
+        const footerText = document.getElementById('footer-text');
+        footerText.textContent = config.footer_text || defaultConfig.footer_text;
+        footerText.style.color = textColor;
+        footerText.style.fontSize = `${baseFontSize * 0.875}px`;
+        footerText.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        }
+
+        function mapToCapabilities(config) {
+        return {
+            recolorables: [
+            {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+                }
+            },
+            {
+                get: () => config.surface_color || defaultConfig.surface_color,
+                set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+                }
+            },
+            {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+                }
+            },
+            {
+                get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+                }
+            }
+            ],
+            borderables: [],
+            fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+                config.font_family = value;
+                window.elementSdk.setConfig({ font_family: value });
+            }
+            },
+            fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+                config.font_size = value;
+                window.elementSdk.setConfig({ font_size: value });
+            }
+            }
+        };
+        }
+
+        function mapToEditPanelValues(config) {
+        return new Map([
+            ["page_title", config.page_title || defaultConfig.page_title],
+            ["page_subtitle", config.page_subtitle || defaultConfig.page_subtitle],
+            ["user_id_label", config.user_id_label || defaultConfig.user_id_label],
+            ["name_label", config.name_label || defaultConfig.name_label],
+            ["password_label", config.password_label || defaultConfig.password_label],
+            ["button_text", config.button_text || defaultConfig.button_text],
+            ["footer_text", config.footer_text || defaultConfig.footer_text]
+        ]);
+        }
+
+        if (window.elementSdk) {
+        window.elementSdk.init({
+            defaultConfig,
+            onConfigChange,
+            mapToCapabilities,
+            mapToEditPanelValues
+        });
+        }
+
+        document.getElementById('toggle-password').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye-icon');
+        const eyeSlashIcon = document.getElementById('eye-slash-icon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.add('hidden');
+            eyeSlashIcon.classList.remove('hidden');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('hidden');
+            eyeSlashIcon.classList.add('hidden');
+        }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const userId = document.getElementById('user-id').value;
+        const name = document.getElementById('name').value;
+        const password = document.getElementById('password').value;
+        
+        const button = document.getElementById('login-button');
+        button.disabled = true;
+        button.textContent = 'Logging in...';
+        
+        setTimeout(() => {
+            const successMessage = document.getElementById('success-message');
+            document.getElementById('welcome-name').textContent = name;
+            successMessage.classList.remove('hidden');
+            
+            button.disabled = false;
+            button.textContent = config.button_text || defaultConfig.button_text;
+            
+            setTimeout(() => {
+            successMessage.classList.add('hidden');
+            document.getElementById('login-form').reset();
+            }, 3000);
+        }, 1000);
+        });
+    </script>
+{% endblock content %}

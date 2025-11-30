@@ -14,3 +14,6 @@ def vol_login(request):
 
 def com_login(request):
     return render(request, "com_login.html", {"title": "Company Login - CarbonBloom"})
+
+def frm_login(request):
+    return render(request, "frm_login.html", {"title": "Farmer Login - CarbonBloom"})

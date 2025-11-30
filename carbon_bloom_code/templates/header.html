@@ -20,6 +20,61 @@
   <!-- Proper Tailwind load -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <style>
+    .login-dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      right: 0;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      min-width: 240px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-15px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      z-index: 50;
+    }
+
+    .login-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-option {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .dropdown-option:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown-option:hover {
+      background-color: #f0fdf4;
+      color: #2E7D32;
+      padding-left: 2rem;
+    }
+
+    .dropdown-icon {
+      font-size: 1.25rem;
+      margin-right: 0.75rem;
+    }
+  </style>
+
 </head>
 
 <body class="w-full min-h-full">
@@ -27,33 +82,32 @@
 <!-- Header -->
 <header class="w-full bg-white shadow-sm sticky top-0 z-50">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <div class="flex justify-between items-center">
-      <div>
-        <div class="flex items-center gap-2">
-          <span id="logo-text" class="text-xl font-bold flex" style="color:#2E7D32;"><img src="{% static 'img/logo.png' %}" class="size-12" style="border-radius: 40%;"/><span class="ml-2 mt-3"><span class="text-black">Carbon</span>Bloom</span></span>
-        </div>
-        
-        <span class="text-sm font-medium text-gray-500">Cultivating innovation regenerating the planet</span>
-      </div>
-
-      <div class="hidden md:flex gap-6">
-        <a href="#about" class="text-gray-700 hover:text-[#2E7D32]">About</a>
-        <a href="#how-it-works" class="text-gray-700 hover:text-[#2E7D32]">How It Works</a>
-        <a href="#login" class="text-gray-700 hover:text-[#2E7D32]">Login</a>
-      </div>
-
-      <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-gray-100 rounded">
-        <svg class="w-6 h-6" fill="none" stroke="#333">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+   <div class="flex justify-between items-center">
+    <div>
+     <div class="flex items-center gap-2"><span id="logo-text" class="text-xl font-bold flex" style="color:#2E7D32;"> <img src="{% static 'img/logo.png' %}" class="size-12" style="border-radius: 40%;"> <span class="ml-2 mt-3"><span class="text-black">Carbon</span>Bloom</span> </span>
+     </div><span class="text-sm font-medium text-gray-500">Cultivating innovation regenerating the planet</span>
     </div>
-
-    <div id="mobile-menu" class="hidden md:hidden mt-4 flex-col border-t border-gray-100 pt-4">
-      <a href="#about" class="text-gray-700 hover:text-[#2E7D32] py-2">About</a>
-      <a href="#how-it-works" class="text-gray-700 hover:text-[#2E7D32] py-2">How It Works</a>
-      <a href="#login" class="text-gray-700 hover:text-[#2E7D32] py-2">Login</a>
-    </div>
+    <div class="hidden md:flex gap-6 items-center"><a href="#about" class="text-gray-700 hover:text-[#2E7D32]">About</a> <a href="#how-it-works" class="text-gray-700 hover:text-[#2E7D32]">How It Works</a>
+     <div class="login-dropdown"><a href="#login" class="text-gray-700 hover:text-[#2E7D32]">Login</a>
+      <div class="dropdown-menu"><a href="{% url 'frm_login' %}" class="dropdown-option"> <span class="dropdown-icon">🌾</span> <span>Login as Farmer</span> </a> <a href="{% url 'com_login' %}" class="dropdown-option"> <span class="dropdown-icon">🏢</span> <span>Login as Company</span> </a> <a href="{% url 'vol_login' %}" class="dropdown-option"> <span class="dropdown-icon">🤝</span> <span>Login as Volunteer</span> </a> <a href="{% url 'admin:login' %}" class="dropdown-option">
+            <span class="dropdown-icon">🔐</span>
+            <span>Login as Admin</span>
+          </a>
+      </div>
+     </div>
+    </div><button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-gray-100 rounded">
+     <svg class="w-6 h-6" fill="none" stroke="#333"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+     </svg></button>
+   </div>
+   <div id="mobile-menu" class="hidden md:hidden mt-4 flex-col border-t border-gray-100 pt-4"><a href="#about" class="text-gray-700 hover:text-[#2E7D32] hover:bg-gray-50 py-3 px-4 rounded block">About</a> <a href="#how-it-works" class="text-gray-700 hover:text-[#2E7D32] hover:bg-gray-50 py-3 px-4 rounded block">How It Works</a>
+    <div class="border-t border-gray-200 my-2"></div>
+    <div class="text-xs font-semibold text-gray-500 px-4 py-2">
+     LOGIN OPTIONS
+    </div><a href="#login-farmer" class="text-gray-700 hover:text-[#2E7D32] hover:bg-gray-50 py-3 px-4 rounded flex items-center"> <span class="text-lg mr-2">🌾</span> <span>Login as Farmer</span> </a> <a href="{% url 'com_login' %}" class="text-gray-700 hover:text-[#2E7D32] hover:bg-gray-50 py-3 px-4 rounded flex items-center"> <span class="text-lg mr-2">🏢</span> <span>Login as Company</span> </a> <a href="{% url 'vol_login' %}" class="text-gray-700 hover:text-[#2E7D32] hover:bg-gray-50 py-3 px-4 rounded flex items-center"> <span class="text-lg mr-2">🤝</span> <span>Login as Volunteer</span> </a> <a href="{% url 'admin:login' %}" class="text-gray-700 hover:text-[#2E7D32] hover:bg-gray-50 py-3 px-4 rounded flex items-center">
+      <span class="text-lg mr-2">🔐</span>
+      <span>Login as Admin</span>
+    </a>
+   </div>
   </nav>
 </header>
 
