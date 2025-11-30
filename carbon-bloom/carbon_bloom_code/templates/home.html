@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <section class="w-full hero-gradient text-white py-16 px-4 sm:py-20 lg:py-24">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 id="hero-headline" class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">Authentic Carbon Credits from Small Landholders.</h1>
+      <p id="hero-subtext" class="text-lg sm:text-xl mb-8 opacity-95">Verified by local volunteers. Calculated by AI. Zero fraud.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a style="text-decoration: none;" href="{% url 'reg_frm' %}"><button id="farmer-cta" class="btn-primary bg-white text-[#2E7D32] font-semibold px-8 py-3 rounded-lg w-full sm:w-auto"> Register as Farmer </button></a> <button id="volunteer-cta" class="btn-primary bg-transparent border-2 border-white text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto"> Register as Company </button>
+      </div>
+    </div>
+  </section><!-- Visual Flow Section -->
+  <section class="w-full bg-gray-50 py-12 px-4">
+   <div class="max-w-5xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+     <div class="flex-1 text-center">
+      <div class="bg-white rounded-full w-20 h-20 mx-auto mb-3 flex items-center justify-center shadow-md">
+       <svg class="w-10 h-10" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#2E7D32" /> <path d="M2 17L12 22L22 17" stroke="#2E7D32" stroke-width="2" />
+       </svg>
+      </div>
+      <p class="text-gray-700 font-medium">Farm Registration</p>
+     </div>
+     <div class="text-[#A5D6A7] text-2xl hidden md:block">
+      →
+     </div>
+     <div class="flex-1 text-center">
+      <div class="bg-white rounded-full w-20 h-20 mx-auto mb-3 flex items-center justify-center shadow-md">
+       <svg class="w-10 h-10" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" fill="#2E7D32" /> <path d="M6 21C6 17.686 8.686 15 12 15C15.314 15 18 17.686 18 21" stroke="#2E7D32" stroke-width="2" />
+       </svg>
+      </div>
+      <p class="text-gray-700 font-medium">Volunteer Verification</p>
+     </div>
+     <div class="text-[#A5D6A7] text-2xl hidden md:block">
+      →
+     </div>
+     <div class="flex-1 text-center">
+      <div class="bg-white rounded-full w-20 h-20 mx-auto mb-3 flex items-center justify-center shadow-md">
+       <svg class="w-10 h-10" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="#2E7D32" stroke-width="2" /> <path d="M8 12L11 15L16 9" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" />
+       </svg>
+      </div>
+      <p class="text-gray-700 font-medium">Transparent Dashboard</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Key Highlights -->
+  <section class="w-full py-16 px-4 bg-white">
+   <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12 text-[#333333]">Why CarbonBloom?</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-6 text-center">
+      <div class="w-12 h-12 bg-[#A5D6A7] rounded-full mx-auto mb-4 flex items-center justify-center"><span class="text-2xl">✔</span>
+      </div>
+      <p id="highlight-1" class="text-gray-700 font-medium">Farmer land registration</p>
+     </div>
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-6 text-center">
+      <div class="w-12 h-12 bg-[#A5D6A7] rounded-full mx-auto mb-4 flex items-center justify-center"><span class="text-2xl">✔</span>
+      </div>
+      <p id="highlight-2" class="text-gray-700 font-medium">Volunteer verification</p>
+     </div>
+     <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-6 text-center">
+      <div class="w-12 h-12 bg-[#A5D6A7] rounded-full mx-auto mb-4 flex items-center justify-center"><span class="text-2xl">✔</span>
+      </div>
+      <p id="highlight-3" class="text-gray-700 font-medium">Transparent carbon tracking</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- About Section -->
+  <section id="about" class="w-full py-16 px-4 bg-gray-50">
+   <div class="max-w-6xl mx-auto">
+    <h2 id="about-title" class="text-3xl font-bold text-center mb-4 text-[#333333]">Our Mission</h2>
+    <p id="about-subtitle" class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Empowering small landholders to participate in carbon markets while ensuring transparency and authenticity through community-driven verification.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"><!-- Goal 1 -->
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="mb-4">
+       <svg class="w-16 h-16 mx-auto" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" fill="#A5D6A7" /> <path d="M32 10C32 10 25 15 25 25C25 30 28 35 32 35C36 35 39 30 39 25C39 15 32 10 32 10Z" fill="#2E7D32" /> <rect x="30" y="35" width="4" height="15" fill="#2E7D32" /> <ellipse cx="32" cy="50" rx="8" ry="3" fill="#2E7D32" />
+       </svg>
+      </div>
+      <h3 id="goal-1-title" class="text-xl font-semibold mb-3 text-[#2E7D32] text-center">Support Small Farmers</h3>
+      <p id="goal-1-text" class="text-gray-700 text-center">Enable smallholders to monetize their environmental efforts and gain access to carbon credit markets traditionally reserved for large corporations.</p>
+     </div><!-- Goal 2 -->
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="mb-4">
+       <svg class="w-16 h-16 mx-auto" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" fill="#A5D6A7" /> <path d="M32 15L38 28L52 30L42 40L44 54L32 47L20 54L22 40L12 30L26 28L32 15Z" fill="#2E7D32" />
+       </svg>
+      </div>
+      <h3 id="goal-2-title" class="text-xl font-semibold mb-3 text-[#2E7D32] text-center">Build Trust</h3>
+      <p id="goal-2-text" class="text-gray-700 text-center">Use local volunteer verification and AI-powered calculations to ensure every carbon credit is authentic, traceable, and fraud-free.</p>
+     </div><!-- Goal 3 -->
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="mb-4">
+       <svg class="w-16 h-16 mx-auto" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" fill="#A5D6A7" /> <path d="M20 35C20 35 25 30 32 30C39 30 44 35 44 35" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" /> <circle cx="24" cy="26" r="3" fill="#2E7D32" /> <circle cx="40" cy="26" r="3" fill="#2E7D32" /> <circle cx="32" cy="42" r="8" fill="#2E7D32" />
+       </svg>
+      </div>
+      <h3 id="goal-3-title" class="text-xl font-semibold mb-3 text-[#2E7D32] text-center">Community Driven</h3>
+      <p id="goal-3-text" class="text-gray-700 text-center">Leverage local volunteers who understand the land and culture, creating jobs while ensuring accurate field verification.</p>
+     </div><!-- Goal 4 -->
+     <div class="bg-white rounded-xl p-6 shadow-md">
+      <div class="mb-4">
+       <svg class="w-16 h-16 mx-auto" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="28" fill="#A5D6A7" /> <rect x="18" y="20" width="28" height="24" rx="2" stroke="#2E7D32" stroke-width="3" /> <path d="M24 30L28 34L38 24" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+       </svg>
+      </div>
+      <h3 id="goal-4-title" class="text-xl font-semibold mb-3 text-[#2E7D32] text-center">Full Transparency</h3>
+      <p id="goal-4-text" class="text-gray-700 text-center">Every project is publicly viewable with photos, verification reports, and carbon calculations—building confidence for buyers and regulators.</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Join Us Section -->
+  <section class="w-full py-16 px-4 bg-white">
+   <div class="max-w-4xl mx-auto text-center">
+    <h2 id="join-title" class="text-3xl font-bold mb-4 text-[#333333]">Join the Movement</h2>
+    <p id="join-subtitle" class="text-lg text-gray-600 mb-10">Whether you're a farmer looking to register your land, or a volunteer ready to verify projects, we need you to make authentic carbon credits a reality.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto"><!-- Farmer Card -->
+     <div class="bg-[#A5D6A7] bg-opacity-20 border-2 border-[#A5D6A7] rounded-xl p-8">
+      <svg class="w-20 h-20 mx-auto mb-4" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" fill="#2E7D32" opacity="0.1" /> <path d="M32 8L28 18L18 18L26 24L22 34L32 28L42 34L38 24L46 18L36 18L32 8Z" fill="#2E7D32" /> <rect x="30" y="34" width="4" height="12" fill="#2E7D32" /> <rect x="20" y="46" width="24" height="8" rx="2" fill="#2E7D32" />
+      </svg>
+      <h3 id="farmer-card-title" class="text-xl font-bold mb-3 text-[#2E7D32]">I'm a Farmer</h3>
+      <p id="farmer-card-text" class="text-gray-700 mb-6 text-sm">Register your land, get verified, and start earning from your environmental efforts.</p><button id="join-farmer-btn" class="btn-primary bg-[#2E7D32] text-white font-semibold px-6 py-3 rounded-lg w-full"> Register Your Land </button>
+     </div><!-- Volunteer Card -->
+     <div class="bg-[#A5D6A7] bg-opacity-20 border-2 border-[#A5D6A7] rounded-xl p-8">
+      <svg class="w-20 h-20 mx-auto mb-4" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" fill="#2E7D32" opacity="0.1" /> <circle cx="32" cy="22" r="8" fill="#2E7D32" /> <path d="M18 50C18 40 24 36 32 36C40 36 46 40 46 50" fill="#2E7D32" /> <path d="M40 28L46 32L40 36" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <h3 id="volunteer-card-title" class="text-xl font-bold mb-3 text-[#2E7D32]">I'm a Volunteer</h3>
+      <p id="volunteer-card-text" class="text-gray-700 mb-6 text-sm">Help verify projects in your area and ensure the authenticity of carbon credits.</p><button id="join-volunteer-btn" class="btn-primary bg-[#2E7D32] text-white font-semibold px-6 py-3 rounded-lg w-full"> Become a Volunteer </button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+{% endblock content %}
+    

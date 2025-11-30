@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <script src="{% static 'js/register.js' %}" rel="script/javascript"></script>
+
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <main class="w-full flex-1 py-6 md:py-12 px-4 md:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 id="page-title" class="text-xl md:text-2xl font-bold mb-6 md:mb-8 text-center">Register
+                New Farmer
+            </h2>
+            <form id="register_farmer" onsubmit="return false;" enctype="multipart/form-data" class="space-y-6 md:space-y-8"><!-- Row 1 -->
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div><label for="name" class="block text-sm font-medium mb-2">Name
+                    <span class="text-red-500">*</span></label> <input type="text"
+                    id="name" name="name" required
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                </div>
+                <div><label for="dob" class="block text-sm font-medium mb-2">Date
+                    of Birth <span class="text-red-500">*</span></label> <input
+                    type="date" id="dob" name="dob" required
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                </div>
+                <div><label for="phone"
+                    class="block text-sm font-medium mb-2">Phone <span
+                        class="text-red-500">*</span></label> <input type="tel"
+                    id="phone" name="phone" required pattern="[0-9]{10}"
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                </div>
+                </div><!-- Row 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div><label for="address1"
+                    class="block text-sm font-medium mb-2">Address 1 <span
+                        class="text-red-500">*</span></label> <textarea
+                    id="address1" name="address1" required rows="3"
+                    placeholder="House No, Flat No"
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all resize-none"></textarea>
+                </div>
+                <div><label for="address2"
+                    class="block text-sm font-medium mb-2">Address 2 <span
+                        class="text-red-500">*</span></label> <textarea
+                    id="address2" name="address2" required rows="3"
+                    placeholder="Locality, Block No, Plot"
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all resize-none"></textarea>
+                </div>
+                <div><label for="address3"
+                    class="block text-sm font-medium mb-2">Address 3 <span
+                        class="text-gray-500 text-xs">(Optional)</span></label>
+                    <textarea id="address3" name="address3" rows="3"
+                    placeholder="Others"
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all resize-none"></textarea>
+                </div>
+                </div><!-- Row 3 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div><label for="state"
+                    class="block text-sm font-medium mb-2">State <span
+                        class="text-red-500">*</span></label> 
+
+                    <!-- State / UT Dropdown -->
+
+                    <select 
+                        name="state" 
+                        id="state" 
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onchange="loadDistricts()"
+                        required
+                    >
+                        <option disabled selected>Select State / UT</option>
+
+                        <!-- States -->
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+
+                        <!-- Union Territories -->
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">
+                            Dadra and Nagar Haveli and Daman and Diu
+                        </option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Puducherry">Puducherry</option>
+                    </select>
+
+
+                </div>
+                <div><label for="district"
+                    class="block text-sm font-medium mb-2">District <span
+                        class="text-red-500">*</span></label>
+                    <select 
+                        name="district" 
+                        id="district" 
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        required
+                    >
+                        <option disabled selected>Select District</option>
+                    </select>
+
+                </div>
+                <div><label for="pin" class="block text-sm font-medium mb-2">PIN
+                    Code <span class="text-red-500">*</span></label> <input
+                    type="text" id="pin" name="pin" required pattern="[0-9]{6}"
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                </div>
+                </div><!-- Row 4 - Aadhar Details -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div><label for="aadhar_number"
+                    class="block text-sm font-medium mb-2">Aadhar Number <span
+                        class="text-red-500">*</span></label> <input type="text"
+                    id="aadhar_number" name="aadhar_number" required
+                    pattern="[0-9]{12}" maxlength="12"
+                    class="w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                </div>
+                <div><label class="block text-sm font-medium mb-2">Aadhar Photo
+                    (Front) <span class="text-red-500">*</span></label> <input
+                    type="file" id="aadhar_front" name="aadhar_front" accept="image/*">
+                    <label for="aadhar_front" class="file-input-label w-full">Choose
+                    Front Photo</label>
+                    <div id="aadhar_front_preview"
+                    class="image-preview-container mt-3 hidden"><img
+                        id="aadhar_front_img" src alt="Aadhar Front"> <button
+                        type="button" class="delete-image-btn"
+                        onclick="deleteImage('aadhar_front')">×</button>
+                    </div>
+                </div>
+                <div><label class="block text-sm font-medium mb-2">Aadhar Photo
+                    (Back) <span class="text-red-500">*</span></label> <input
+                    type="file" id="aadhar_back"  name="aadhar_back" accept="image/*"> <label
+                    for="aadhar_back" class="file-input-label w-full">Choose Back
+                    Photo</label>
+                    <div id="aadhar_back_preview"
+                    class="image-preview-container mt-3 hidden"><img
+                        id="aadhar_back_img" src alt="Aadhar Back"> <button
+                        type="button" class="delete-image-btn"
+                        onclick="deleteImage('aadhar_back')">×</button>
+                    </div>
+                </div>
+                </div><!-- Row 5 - Profile & Password -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                    <div><label class="block text-sm font-medium mb-2">Profile Picture
+                        <span class="text-red-500">*</span></label> <input type="file"
+                        id="profile_picture" name="profile_picture" accept="image/*"> <label
+                        for="profile_picture" class="file-input-label w-full">Choose
+                        Profile Photo</label>
+                        <div id="profile_picture_preview"
+                        class="profile-preview-container mt-3 mx-auto hidden"><img
+                            id="profile_picture_img" src alt="Profile"> <button
+                            type="button" class="delete-image-btn"
+                            onclick="deleteImage('profile_picture')">×</button>
+                        </div>
+                    </div>
+                    <div><label for="password"
+                        class="block text-sm font-medium mb-2">Password <span
+                            class="text-red-500">*</span></label>
+                        <div class="relative"><input type="password" id="password"
+                            name="password" required minlength="8" maxlength="10"
+                            class="w-full px-4 py-3 pr-12 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                            <span class="password-toggle" onclick="togglePassword('password')" id="password-toggle-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div id="password-validation" class="mt-3">
+                        <div class="validation-item"><span class="validation-bullet"
+                            id="val-length"></span> <span class="text-sm">8-10
+                            characters</span>
+                        </div>
+                        <div class="validation-item"><span class="validation-bullet"
+                            id="val-uppercase"></span> <span class="text-sm">One
+                            uppercase letter</span>
+                        </div>
+                        <div class="validation-item"><span class="validation-bullet"
+                            id="val-lowercase"></span> <span class="text-sm">One
+                            lowercase letter</span>
+                        </div>
+                        <div class="validation-item"><span class="validation-bullet"
+                            id="val-number"></span> <span class="text-sm">One
+                            number</span>
+                        </div>
+                        <div class="validation-item"><span class="validation-bullet"
+                            id="val-special"></span> <span class="text-sm">One special
+                            character</span>
+                        </div>
+                        </div>
+                    </div>
+                    <div><label for="confirm_password"
+                        class="block text-sm font-medium mb-2">Confirm Password <span
+                            class="text-red-500">*</span></label>
+                        <div class="relative"><input type="password"
+                            id="confirm_password" name="confirm_password" required
+                            minlength="8" maxlength="10"
+                            class="w-full px-4 py-3 pr-12 border-2 rounded-lg focus:outline-none focus:ring-2 transition-all">
+                            <span class="password-toggle" onclick="togglePassword('confirm_password')" id="confirm_password-toggle-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div id="password-match-container"></div>
+                    </div>
+                </div><!-- Row 6 - Terms and Conditions -->
+                <div class="border-2 rounded-lg p-4 md:p-6">
+                <h3 id="terms-title" class="text-lg font-semibold mb-3">Terms and
+                    Conditions</h3><textarea readonly
+                    class="w-full px-4 py-3 border-2 rounded-lg bg-gray-50 mb-4 resize-none"
+                    rows="6">
+                        By registering as a farmer on this portal, you agree to the following terms and conditions:
+
+                        1. All information provided must be accurate and truthful.
+                        2. You consent to the collection and processing of your personal data for agricultural services.
+                        3. Your Aadhar details will be kept confidential and used only for verification purposes.
+                        4. You will receive updates and notifications regarding farming schemes and programs.
+                        5. You may be contacted by agricultural officers for field visits and assistance.
+                        6. Misuse of the portal or providing false information may result in account suspension.
+
+                        Please read carefully before agreeing.</textarea>
+                <div class="flex items-center gap-3"><input type="checkbox"
+                    id="terms_checkbox" name="terms_checkbox" value="1" required class="w-5 h-5 cursor-pointer">
+                    <label for="terms_checkbox"
+                    class="text-sm font-medium cursor-pointer">I agree to the
+                    Terms and Conditions <span
+                        class="text-red-500">*</span></label>
+                </div>
+                </div><!-- Submit Button -->
+                <div class="text-center pt-4"><button type="submit" id="submit-btn"
+                    class="px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg shadow-lg transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto">
+                    <span id="submit-text">Register Farmer</span> </button>
+                </div><!-- Success Message -->
+                <div id="success-message" class="hidden p-4 rounded-lg text-center font-medium"><span id="success-text">Farmer registered successfully!</span>
+                </div>
+                <div id="success-message" class="hidden p-4 rounded-lg text-center font-medium">
+                    <span id="success-text">Farmer registered successfully!</span>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        initializeApp();
+    </script>
+
+{% endblock %}

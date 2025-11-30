@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /*
+    *** MINIMAL CUSTOM CSS RETAINED ***
+    This block is only for styles that Tailwind utility classes cannot easily handle:
+    1. Body gradient background (set using the JS configuration variable).
+    2. CSS animations.
+    */
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        min-height: 100vh;
+        /* The actual gradient is set by the JS/SDK in initializeApp */
+    }
+
+    .brand-name {
+        letter-spacing: -0.5px;
+    }
+
+    .message-box {
+        display: none;
+        animation: slideDown 0.3s ease;
+    }
+
+    .message-box.show {
+        display: block;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+<script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+
+<main class="page-wrapper w-full p-5 flex justify-center items-center">
+    <div class="form-container bg-white rounded-2xl shadow-2xl p-10 w-full max-w-md">
+        
+        <div class="logo-section text-center mb-8">
+            <div class="brand-name text-4xl font-bold m-0" id="brandName">
+                <span class="text-gray-900">Carbon</span><span style="color: #2E7D32;">Bloom</span><span class="inline-block ml-2 text-3xl" style="color: #2E7D32;">🌱</span>
+            </div>
+        </div>
+        
+        <div id="successMessage" class="message-box p-4 rounded-lg mb-6 text-center font-medium text-sm border-2" style="border-color: #2E7D32; background-color: #E8F5E9; color: #1B5E20;">
+            Login successful! Redirecting...
+        </div>
+        <div id="errorMessage" class="message-box p-4 rounded-lg mb-6 text-center font-medium text-sm border-2 border-red-500 bg-red-100 text-red-700"></div>
+        
+        <h1 class="mt-6 mb-2 text-3xl text-gray-800 text-center font-semibold" id="formTitle">Volunteer Login</h1>
+        <p class="subtitle mb-9 text-base text-gray-600 text-center leading-relaxed" id="formSubtitle">Access your volunteer dashboard</p>
+        
+        <form id="registrationForm" class="space-y-6">
+            
+            <div class="form-group">
+                <label for="name" class="block mb-2 font-semibold text-gray-900 text-sm">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required 
+                       class="w-full p-4 border-2 border-gray-200 rounded-xl text-base transition duration-300 bg-gray-50 focus:border-green-700 focus:shadow-md box-border">
+            </div>
+
+            <div class="form-group">
+                <label for="userid" class="block mb-2 font-semibold text-gray-900 text-sm">User ID / Email</label>
+                <input type="text" id="userid" name="userid" placeholder="Enter your user ID or email" required 
+                       class="w-full p-4 border-2 border-gray-200 rounded-xl text-base transition duration-300 bg-gray-50 focus:border-green-700 focus:shadow-md box-border">
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="block mb-2 font-semibold text-gray-900 text-sm">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required 
+                       class="w-full p-4 border-2 border-gray-200 rounded-xl text-base transition duration-300 bg-gray-50 focus:border-green-700 focus:shadow-md box-border">
+            </div>
+            
+            <div class="text-center pt-2">
+                <a href="#" style="color: #2E7D32;" class="text-sm font-medium hover:text-green-800 transition duration-300">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" id="submitBtn" 
+                    class="submit-btn w-full py-4 text-white font-semibold rounded-xl text-lg shadow-lg transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed mt-4"
+                    style="background-color: #2E7D32; --tw-shadow-color: #2E7D32; box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);">
+                <span id="submitBtnText">Log In</span>
+            </button>
+        </form>
+        
+        <p class="footer-text text-center mt-6 text-xs text-gray-500">Securing a greener future, one login at a time 🌍</p>
+    </div>
+</main>
+
+<script>
+    // --- Configuration and SDK Initialization ---
+    const primaryGreen = "#2E7D32";
+    const darkText = "#1A1A1A"; 
+
+    const defaultConfig = {
+        background_color: primaryGreen, 
+        surface_color: "#ffffff",
+        text_color: darkText, 
+        primary_button_color: primaryGreen, 
+        secondary_text_color: "#6b7280",
+        brand_name: "CarbonBloom",
+        form_title: "Volunteer Login", 
+        form_subtitle: "Access your volunteer dashboard", 
+        submit_button_text: "Log In", 
+        font_family: "Inter",
+        font_size: 16
+    };
+
+    let recordCount = 0;
+    const dataHandler = {
+        onDataChanged(data) { recordCount = data.length; }
+    };
+
+    async function onConfigChange(config) {
+        const bgColor = config.background_color || defaultConfig.background_color;
+        const surfaceColor = config.surface_color || defaultConfig.surface_color;
+        const textColor = config.text_color || defaultConfig.text_color;
+        const primaryBtnColor = config.primary_button_color || defaultConfig.primary_button_color;
+        const secondaryTextColor = config.secondary_text_color || defaultConfig.secondary_text_color;
+        const fontFamily = config.font_family || defaultConfig.font_family;
+        const fontSize = config.font_size || defaultConfig.font_size;
+
+        // Apply dynamic styles
+        document.body.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%)`;
+        document.querySelector('.form-container').style.backgroundColor = surfaceColor;
+
+        // Brand Name (Carbon/Black, Bloom/Green)
+        document.getElementById('brandName').innerHTML = `<span style="color: ${textColor};">Carbon</span><span style="color: ${primaryGreen};">Bloom</span><span class="inline-block ml-2 text-3xl" style="color: ${primaryGreen};">🌱</span>`;
+        document.getElementById('brandName').style.fontFamily = `${fontFamily}, 'Inter', sans-serif`;
+        document.getElementById('brandName').style.fontSize = `${fontSize * 2.25}px`;
+
+        // Titles and Subtitles
+        document.getElementById('formTitle').textContent = config.form_title || defaultConfig.form_title;
+        document.getElementById('formTitle').style.color = textColor;
+        document.getElementById('formSubtitle').textContent = config.form_subtitle || defaultConfig.form_subtitle;
+        document.getElementById('formSubtitle').style.color = secondaryTextColor;
+        document.getElementById('submitBtnText').textContent = config.submit_button_text || defaultConfig.submit_button_text;
+        
+        // Input and Label Styles
+        document.querySelectorAll('label').forEach(label => label.style.color = textColor);
+        document.querySelectorAll('input').forEach(input => input.style.fontFamily = `${fontFamily}, 'Inter', sans-serif`);
+        document.querySelector('.footer-text').style.color = secondaryTextColor;
+        
+        // Success Message Style
+        const successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.style.borderColor = primaryGreen;
+        }
+
+        // Submit Button Styles
+        const submitBtn = document.querySelector('.submit-btn');
+        submitBtn.style.backgroundColor = primaryBtnColor;
+        submitBtn.onmouseover = () => submitBtn.style.backgroundColor = '#1B5E20'; // Darker green on hover
+        submitBtn.onmouseout = () => submitBtn.style.backgroundColor = primaryBtnColor;
+    }
+
+    async function initializeApp() {
+        if (window.dataSdk) {
+            await window.dataSdk.init(dataHandler);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({ defaultConfig, onConfigChange, 
+                mapToCapabilities: (config) => ({
+                    recolorables: [
+                        { get: () => config.background_color || defaultConfig.background_color, set: (value) => window.elementSdk.setConfig({ background_color: value }) },
+                        { get: () => config.surface_color || defaultConfig.surface_color, set: (value) => window.elementSdk.setConfig({ surface_color: value }) },
+                        { get: () => config.text_color || defaultConfig.text_color, set: (value) => window.elementSdk.setConfig({ text_color: value }) },
+                        { get: () => config.primary_button_color || defaultConfig.primary_button_color, set: (value) => window.elementSdk.setConfig({ primary_button_color: value }) },
+                        { get: () => config.secondary_text_color || defaultConfig.secondary_text_color, set: (value) => window.elementSdk.setConfig({ secondary_text_color: value }) }
+                    ],
+                    fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (value) => window.elementSdk.setConfig({ font_family: value }) },
+                    fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (value) => window.elementSdk.setConfig({ font_size: value }) }
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["brand_name", config.brand_name || defaultConfig.brand_name],
+                    ["form_title", config.form_title || defaultConfig.form_title],
+                    ["form_subtitle", config.form_subtitle || defaultConfig.form_subtitle],
+                    ["submit_button_text", config.submit_button_text || defaultConfig.submit_button_text]
+                ])
+            });
+            await onConfigChange(window.elementSdk.config);
+        }
+
+        // --- Form Submission Logic ---
+        const form = document.getElementById('registrationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            successMessage.classList.remove('show');
+            errorMessage.classList.remove('show');
+            
+            const formData = {
+                userid: document.getElementById('userid').value,
+                password: document.getElementById('password').value,
+                name: document.getElementById('name').value
+            };
+
+            submitBtn.disabled = true;
+            document.getElementById('submitBtnText').textContent = 'Logging in...';
+
+            // Simulate API call and validation
+            setTimeout(() => {
+                if (formData.userid === 'volunteer' && formData.password === 'password') {
+                    successMessage.textContent = 'Login Successful! Welcome, ' + formData.name + '.';
+                    successMessage.classList.add('show');
+                } else {
+                    errorMessage.textContent = 'Login Failed. Check your User ID and Password.';
+                    errorMessage.classList.add('show');
+                }
+                
+                submitBtn.disabled = false;
+                const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+                document.getElementById('submitBtnText').textContent = config.submit_button_text || defaultConfig.submit_button_text;
+                
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                    errorMessage.classList.remove('show');
+                }, 5000);
+
+            }, 1500);
+        });
+    }
+
+    initializeApp();
+</script>
+
+{% endblock content %}
