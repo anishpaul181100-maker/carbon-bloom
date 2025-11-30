@@ -3,7 +3,6 @@ argcomplete==3.2.2
 asciidoc @ file:///builddir/build/BUILD/asciidoc-py-10.2.0
 asgiref==3.10.0
 attrs==23.2.0
-bcc==0.35.0
 Brlapi==0.8.5
 cffi==1.16.0
 charset-normalizer==3.4.2
