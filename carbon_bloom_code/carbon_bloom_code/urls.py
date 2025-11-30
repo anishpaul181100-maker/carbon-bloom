@@ -24,9 +24,14 @@ import farmer.views as fviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
-    path('registration_farmer/', views.reg_frm, name='reg_frm'),
+    path('company_login/', views.com_login),
+    path('farmer_login/', views.frm_login),
     path('volunteer_login/', views.vol_login),
-    # path('volunteer_dashboard/', views.vol_dashboard, name='vol_dashboard'),
+    path('registration_company/', views.reg_com, name='reg_com'),
+    path('registration_farmer/', views.reg_frm, name='reg_frm'),
+    path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
+    path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
+    path('company_dashboard/', views.com_dashboard, name='dash_com'),
     path('farmer_register/', fviews.register_farmer, name='register_farmer'),
 ]
 
