@@ -30,5 +30,5 @@ def com_dashboard(request):
     #             return render(request, 'company/company_login.html', {'error_message': error_message})
     # return render(request, 'company/company_login.html', {'title': 'Company Login'})
     
-    return render(request, 'company/company_dashboard.html', {'title': 'Company Dashboard'})
+    return render(request, 'company/dashboard.html', {'title': 'Company Dashboard'})
     
