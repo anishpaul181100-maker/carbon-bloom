@@ -11,3 +11,6 @@ def reg_frm(request):
 
 def vol_login(request):
     return render(request, "vol_login.html", {"title": "Volunteer Login - CarbonBloom"})
+
+def com_login(request):
+    return render(request, "com_login.html", {"title": "Company Login - CarbonBloom"})

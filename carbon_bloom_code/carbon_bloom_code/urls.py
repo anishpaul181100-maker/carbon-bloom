@@ -20,18 +20,18 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 import farmer.views as fviews
-
+import company.views as cviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home),
     path('company_login/', views.com_login),
-    path('farmer_login/', views.frm_login),
+    # path('farmer_login/', views.frm_login),
     path('volunteer_login/', views.vol_login),
-    path('registration_company/', views.reg_com, name='reg_com'),
+    # path('registration_company/', views.reg_com, name='reg_com'),
     path('registration_farmer/', views.reg_frm, name='reg_frm'),
-    path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
-    path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
-    path('company_dashboard/', views.com_dashboard, name='dash_com'),
+    # path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
+    # path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
+    path('company_dashboard/', cviews.com_dashboard, name='dash_com'),
     path('farmer_register/', fviews.register_farmer, name='register_farmer'),
 ]
 
