@@ -1,5 +1,6 @@
 ansible-core==2.16.14
 argcomplete==3.2.2
+asciidoc @ file:///builddir/build/BUILD/asciidoc-py-10.2.0
 asgiref==3.10.0
 attrs==23.2.0
 bcc==0.35.0
@@ -7,7 +8,7 @@ Brlapi==0.8.5
 cffi==1.16.0
 charset-normalizer==3.4.2
 click==8.3.1
-cockpit
+cockpit @ file:///builddir/build/BUILD/cockpit-348/tmp/wheel/cockpit-348-py3-none-any.whl#sha256=3b2d0e9576fd89f51def86287b1395fe1a4378688b70cce83129d7205dacef46
 configshell-fb==1.1.30
 cryptography==43.0.0
 cupshelpers==1.0
@@ -53,16 +54,17 @@ python-linux-procfs==0.7.4
 python-pam==2.0.2
 pyudev==0.24.1
 PyYAML==6.0.1
+pyynl @ file:///builddir/build/BUILD/kernel-6.12.0-157.el10/linux-6.12.0-157.el10.x86_64/tools/net/ynl
 referencing==0.31.1
 requests==2.32.4
 resolvelib==1.0.1
 rpds-py==0.17.1
 rpm==4.19.1.1
 rtslib-fb==2.1.76
-selinux==3.9
-sepolicy==3.9
+selinux @ file:///builddir/build/BUILD/libselinux-3.9/src
+sepolicy @ file:///builddir/build/BUILD/selinux-3.9/python/sepolicy
 setools==4.6.0
-setroubleshoot
+setroubleshoot @ file:///builddir/build/BUILD/setroubleshoot-3.3.35/src
 setuptools==69.0.3
 six==1.16.0
 sos==4.10.0
