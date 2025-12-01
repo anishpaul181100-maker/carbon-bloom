@@ -360,7 +360,7 @@ async function handleFormSubmit(e) {
                     button: "OK",
                 }).then(() => {
                     // window.location.reload();
-                    window.location.href = base_url + 'farmer_dashboard/';
+                    window.location.href = base_url + '/farmer_dashboard/';
                     // showMessage("Farmer Created.", true);
                 });
                 
