@@ -17,3 +17,9 @@ def com_login(request):
 
 def frm_login(request):
     return render(request, "frm_login.html", {"title": "Farmer Login - CarbonBloom"})
+
+def reg_com(request):
+    return render(request, "reg_comp.html", {"title": "Company Registration - CarbonBloom"})
+
+def vol_apply(request):
+    return render(request, "vol_apply.html", {"title": "Volunteer Application - CarbonBloom"})

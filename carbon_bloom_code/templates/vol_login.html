@@ -87,6 +87,17 @@
                 <span id="submitBtnText">Log In</span>
             </button>
         </form>
+
+        <div class="mt-3 items-center justify-center text-center">
+        Don't have an account?
+        <div class="mt-2">
+            <a href="{% url 'reg_frm' %}" class="text-green-600 hover:underline">Register as Farmer</a>
+            <span class="mx-2">|</span>
+            <a href="{% url 'reg_comp' %}" class="text-green-600 hover:underline">Register as Company</a>
+            <span class="mx-2">|</span>
+            <a href="{% url 'vol_apply' %}" class="text-green-600 hover:underline">Apply as Volunteer</a>
+        </div>
+        </div>
         
         <p class="footer-text text-center mt-6 text-xs text-gray-500">Securing a greener future, one login at a time 🌍</p>
     </div>

@@ -28,9 +28,10 @@ urlpatterns = [
     path('farmer_login/', views.frm_login, name='frm_login'),
     path('volunteer_login/', views.vol_login, name='vol_login'),
     path('registration_farmer/', views.reg_frm, name='reg_frm'),
-    path('company_dashboard/', cviews.com_dashboard, name='dash_com'),
     path('farmer_register/', fviews.register_farmer, name='register_farmer'),
-    # path('registration_company/', views.reg_com, name='reg_com'),
+    path('registration_company/', views.reg_com, name='reg_comp'),
+    path('volunteer_apllication/', views.vol_apply, name='vol_apply'),
+    # path('company_dashboard/', cviews.com_dashboard, name='dash_com'),
     # path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
     # path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
 ]

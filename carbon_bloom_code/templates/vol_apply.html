@@ -1,0 +1,765 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .image-preview-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .delete-preview {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+    
+    .delete-preview:hover {
+      background: #dc2626;
+    }
+    
+    .preview-image {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .file-input-button {
+      background: #14b8a6;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      transition: background 0.2s;
+      font-weight: 500;
+    }
+    
+    .file-input-button:hover {
+      background: #0d9488;
+    }
+    
+    .file-input-wrapper input[type=file] {
+      position: absolute;
+      left: -9999px;
+    }
+    
+    input:disabled, select:disabled, textarea:disabled, button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        font-size: 14px;
+      }
+      
+      #app > div > div {
+        padding: 16px !important;
+      }
+      
+      .delete-preview {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+      
+      button[type="submit"], button[type="button"] {
+        width: 100% !important;
+        margin-bottom: 12px;
+      }
+      
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+  </style>
+
+  <div id="app"
+      style="width: 100%; min-height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px 10px;">
+      <div style="max-width: 900px; margin: 0 auto;">
+        <div
+          style="background: white; border-radius: 16px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-bottom: 24px;">
+          <div style="text-align: center; margin-bottom: 32px;">
+            <h1
+              style="font-size: clamp(24px, 6vw, 36px); font-weight: 700; margin: 0 0 4px 0;"><span
+                style="color: #000000;">Carbon</span><span
+                style="color: #10b981;">Bloom</span></h1>
+            <p
+              style="color: #6b7280; font-size: clamp(12px, 3vw, 14px); margin: 0 0 24px 0;">Growing
+              a Greener Tomorrow</p>
+            <h2 id="form-title"
+              style="font-size: clamp(20px, 5vw, 28px); font-weight: 600; color: #1f2937; margin: 0 0 8px 0;">Volunteer
+              Application</h2>
+            <p style="color: #6b7280; margin: 0;">Fill in your details to apply
+              as a volunteer</p>
+          </div>
+          <form id="registration-form"><!-- CARD 1: Personal Details -->
+            <div
+              style="background: #ecfdf5; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 2px solid #a7f3d0;">
+              <h2 id="card1-title"
+                style="font-size: 20px; font-weight: 600; color: #065f46; margin: 0 0 24px 0;">Personal
+                Details</h2><!-- Row 1: Name, Email, Phone -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                <div><label for="name"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Full
+                    Name *</label> <input type="text" id="name" name="name"
+                    required
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="Enter your full name">
+                </div>
+                <div><label for="email"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Email
+                    Address *</label> <input type="email" id="email"
+                    name="email" required
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="your.email@example.com">
+                </div>
+                <div><label for="phone"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Phone
+                    Number *</label> <input type="tel" id="phone" name="phone"
+                    required pattern="[0-9]{10}"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="10-digit mobile number">
+                </div>
+              </div><!-- Row 2: Address Fields -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                <div><label for="address1"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Address
+                    Line 1 *</label> <textarea id="address1" name="address1"
+                    required rows="2"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; resize: none; overflow-y: auto; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="Flat No/House No."></textarea>
+                </div>
+                <div><label for="address2"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Address
+                    Line 2 *</label> <textarea id="address2" name="address2"
+                    required rows="2"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; resize: none; overflow-y: auto; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="Locality/Road Name"></textarea>
+                </div>
+                <div><label for="address3"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Address
+                    Line 3</label> <textarea id="address3" name="address3"
+                    rows="2"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; resize: none; overflow-y: auto; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="Landmark (Optional)"></textarea>
+                </div>
+              </div><!-- Row 3: State, District, Pincode -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                <div><label for="state"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">State/UT
+                    *</label> <select id="state" name="state" required
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; background: white; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"> <option value
+                      selected disabled>-- Select State/UT --</option> <option
+                      value="Andhra Pradesh">Andhra Pradesh</option> <option
+                      value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option> <option
+                      value="Bihar">Bihar</option> <option
+                      value="Chhattisgarh">Chhattisgarh</option> <option
+                      value="Goa">Goa</option> <option
+                      value="Gujarat">Gujarat</option> <option
+                      value="Haryana">Haryana</option> <option
+                      value="Himachal Pradesh">Himachal Pradesh</option> <option
+                      value="Jharkhand">Jharkhand</option> <option
+                      value="Karnataka">Karnataka</option> <option
+                      value="Kerala">Kerala</option> <option
+                      value="Madhya Pradesh">Madhya Pradesh</option> <option
+                      value="Maharashtra">Maharashtra</option> <option
+                      value="Manipur">Manipur</option> <option
+                      value="Meghalaya">Meghalaya</option> <option
+                      value="Mizoram">Mizoram</option> <option
+                      value="Nagaland">Nagaland</option> <option
+                      value="Odisha">Odisha</option> <option
+                      value="Punjab">Punjab</option> <option
+                      value="Rajasthan">Rajasthan</option> <option
+                      value="Sikkim">Sikkim</option> <option
+                      value="Tamil Nadu">Tamil Nadu</option> <option
+                      value="Telangana">Telangana</option> <option
+                      value="Tripura">Tripura</option> <option
+                      value="Uttar Pradesh">Uttar Pradesh</option> <option
+                      value="Uttarakhand">Uttarakhand</option> <option
+                      value="West Bengal">West Bengal</option> <option
+                      value="Andaman and Nicobar Islands">Andaman and Nicobar
+                      Islands</option> <option
+                      value="Chandigarh">Chandigarh</option> <option
+                      value="Dadra and Nagar Haveli and Daman and Diu">Dadra and
+                      Nagar Haveli and Daman and Diu</option> <option
+                      value="Delhi">Delhi</option> <option
+                      value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    <option value="Ladakh">Ladakh</option> <option
+                      value="Lakshadweep">Lakshadweep</option> <option
+                      value="Puducherry">Puducherry</option> </select>
+                </div>
+                <div><label for="district"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">District
+                    *</label> <select id="district" name="district" required
+                    disabled
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; background: white; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"> <option value
+                      selected disabled>-- Select District --</option> </select>
+                </div>
+                <div><label for="pincode"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Pin
+                    Code *</label> <input type="text" id="pincode"
+                    name="pincode" required pattern="[0-9]{6}"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="6-digit PIN code">
+                </div>
+              </div><!-- Row 4: Document Uploads -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                <div><label for="aadhaar-front"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Aadhaar
+                    Front *</label>
+                  <div class="file-input-wrapper"><label for="aadhaar-front"
+                      class="file-input-button">Choose File</label> <input
+                      type="file" id="aadhaar-front" name="aadhaar-front"
+                      accept="image/*" required>
+                  </div>
+                  <div id="aadhaar-front-preview"
+                    style="margin-top: 12px;"></div>
+                </div>
+                <div><label for="aadhaar-back"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Aadhaar
+                    Back *</label>
+                  <div class="file-input-wrapper"><label for="aadhaar-back"
+                      class="file-input-button">Choose File</label> <input
+                      type="file" id="aadhaar-back" name="aadhaar-back"
+                      accept="image/*" required>
+                  </div>
+                  <div id="aadhaar-back-preview"
+                    style="margin-top: 12px;"></div>
+                </div>
+                <div><label for="profile-pic"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Profile
+                    Picture *</label>
+                  <div class="file-input-wrapper"><label for="profile-pic"
+                      class="file-input-button">Choose Photo</label> <input
+                      type="file" id="profile-pic" name="profile-pic"
+                      accept="image/*" required>
+                  </div>
+                  <div id="profile-pic-preview" style="margin-top: 12px;"></div>
+                </div>
+              </div><!-- Row 5: CV Upload -->
+              <div style="margin-top: 16px;"><label for="cv-upload"
+                  style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">CV/Resume
+                  *</label>
+                <div class="file-input-wrapper" style="max-width: 400px;"><label
+                    for="cv-upload" class="file-input-button">Choose CV
+                    File</label> <input type="file" id="cv-upload"
+                    name="cv-upload" accept=".pdf,.doc,.docx" required>
+                </div>
+                <div id="cv-upload-preview" style="margin-top: 12px;"></div>
+              </div>
+            </div><!-- CARD 1.5: Referral Card (Optional) -->
+            <div
+              style="background: #ccfbf1; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 2px solid #5eead4;">
+              <h2
+                style="font-size: 20px; font-weight: 600; color: #0f766e; margin: 0 0 8px 0;">Referral
+                Details (Optional)</h2>
+              <p style="color: #0f766e; font-size: 14px; margin: 0 0 20px 0;">If
+                someone referred you, please provide their details below</p>
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                <div><label for="referee-name"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Name
+                    of Referee</label> <input type="text" id="referee-name"
+                    name="referee-name"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="Enter referee's full name">
+                </div>
+                <div><label for="referee-contact"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Contact
+                    of Referee</label> <input type="tel" id="referee-contact"
+                    name="referee-contact" pattern="[0-9]{10}"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"
+                    placeholder="10-digit mobile number">
+                </div>
+                <div><label for="referee-relation"
+                    style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Relation
+                    with Referee</label> <select id="referee-relation"
+                    name="referee-relation"
+                    style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; background: white; transition: border-color 0.2s;"
+                    onfocus="this.style.borderColor='#14b8a6'"
+                    onblur="this.style.borderColor='#d1d5db'"> <option value
+                      selected disabled>-- Select Relation --</option> <option
+                      value="Father">Father</option> <option
+                      value="Mother">Mother</option> <option
+                      value="Sibling">Sibling</option> <option
+                      value="Friend">Friend</option> <option
+                      value="Colleague">Colleague</option> <option
+                      value="Teacher">Teacher</option> <option
+                      value="Other">Other</option> </select>
+                </div>
+              </div>
+              <div id="other-relation-container"
+                style="display: none; margin-top: 16px;"><label
+                  for="other-relation"
+                  style="display: block; font-weight: 500; color: #374151; margin-bottom: 8px;">Please
+                  Specify Relation</label> <input type="text"
+                  id="other-relation" name="other-relation"
+                  style="width: 100%; padding: 12px; border: 2px solid #d1d5db; border-radius: 8px; font-size: 16px; transition: border-color 0.2s;"
+                  onfocus="this.style.borderColor='#14b8a6'"
+                  onblur="this.style.borderColor='#d1d5db'"
+                  placeholder="Enter your relation with the referee">
+              </div>
+            </div><!-- CARD 2: Terms and Conditions -->
+            <div
+              style="background: #d1fae5; border-radius: 12px; padding: 24px; margin-bottom: 24px; border: 2px solid #6ee7b7;">
+              <h2 id="card2-title"
+                style="font-size: 20px; font-weight: 600; color: #065f46; margin: 0 0 16px 0;">Terms
+                and Conditions</h2>
+              <div
+                style="background: white; border-radius: 8px; padding: 20px; margin-bottom: 16px; border-left: 4px solid #10b981;">
+                <ul
+                  style="margin: 0; padding-left: 20px; color: #047857; line-height: 1.8;">
+                  <li style="margin-bottom: 12px;">A confirmation email will be
+                    sent to your registered email address for further
+                    details.</li>
+                  <li style="margin-bottom: 12px;">Our team may contact you if
+                    additional information or verification is required.</li>
+                  <li style="margin-bottom: 12px;">All information provided must
+                    be accurate and truthful to the best of your knowledge.</li>
+                  <li style="margin-bottom: 12px;">Your personal data will be
+                    stored securely and used only for registration
+                    purposes.</li>
+                  <li style="margin-bottom: 12px;">By submitting this form, you
+                    consent to our data collection and processing
+                    practices.</li>
+                  <li>You may be required to provide additional documentation
+                    during the verification process.</li>
+                </ul>
+              </div>
+              <div
+                style="display: flex; align-items: center; background: white; padding: 16px; border-radius: 8px;"><input
+                  type="checkbox" id="agree-terms" name="agree-terms"
+                  style="width: 20px; height: 20px; margin-right: 12px; cursor: pointer; accent-color: #14b8a6;">
+                <label for="agree-terms"
+                  style="color: #047857; font-weight: 500; cursor: pointer; user-select: none;">
+                  I agree to all the terms and conditions stated above </label>
+              </div>
+            </div><!-- CARD 3: Action Buttons -->
+            <div
+              style="display: flex; gap: 16px; justify-content: flex-end;"><button
+                type="button" id="reset-btn"
+                style="background: #0d9488; color: white; padding: 14px 32px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s;"
+                onmouseover="this.style.background='#0f766e'"
+                onmouseout="this.style.background='#0d9488'"> Reset </button>
+              <button type="submit" id="submit-btn" disabled
+                style="background: #14b8a6; color: white; padding: 14px 32px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s;"
+                onmouseover="if(!this.disabled) this.style.background='#0d9488'"
+                onmouseout="if(!this.disabled) this.style.background='#14b8a6'">
+                <span id="submit-text">Apply</span> </button>
+            </div>
+          </form>
+          <div id="success-message"
+            style="display: none; background: #ccfbf1; border: 2px solid #14b8a6; border-radius: 12px; padding: 20px; margin-top: 24px; text-align: center;">
+            <p
+              style="font-size: 18px; font-weight: 600; color: #134e4a; margin: 0 0 8px 0;">Application
+              Submitted Successfully!</p>
+            <p style="color: #0f766e; margin: 0;">Thank you for applying. A
+              confirmation email will be sent shortly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    const defaultConfig = {
+      form_title: "Volunteer Application",
+      card1_title: "Personal Details",
+      card2_title: "Terms and Conditions",
+      submit_button_text: "Apply",
+      background_color: "#06b6d4",
+      card_background: "#f0fdfa",
+      text_color: "#134e4a",
+      primary_button_color: "#14b8a6",
+      secondary_button_color: "#0d9488"
+    };
+
+    const stateDistricts = {
+      "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Prakasam", "Srikakulam", "Sri Potti Sriramulu Nellore", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
+      "Arunachal Pradesh": ["Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"],
+      "Assam": ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metropolitan", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"],
+      "Bihar": ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
+      "Chhattisgarh": ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Gariaband", "Janjgir-Champa", "Jashpur", "Kabirdham", "Kanker", "Kondagaon", "Korba", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sukma", "Surajpur", "Surguja"],
+      "Goa": ["North Goa", "South Goa"],
+      "Gujarat": ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
+      "Haryana": ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
+      "Himachal Pradesh": ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"],
+      "Jharkhand": ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahebganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
+      "Karnataka": ["Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagar", "Chikballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"],
+      "Kerala": ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
+      "Madhya Pradesh": ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
+      "Maharashtra": ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
+      "Manipur": ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
+      "Meghalaya": ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
+      "Mizoram": ["Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saiha", "Serchhip"],
+      "Nagaland": ["Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Peren", "Phek", "Tuensang", "Wokha", "Zunheboto"],
+      "Odisha": ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundergarh"],
+      "Punjab": ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Mansa", "Moga", "Mohali", "Muktsar", "Pathankot", "Patiala", "Rupnagar", "Sangrur", "Shaheed Bhagat Singh Nagar", "Tarn Taran"],
+      "Rajasthan": ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
+      "Sikkim": ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"],
+      "Tamil Nadu": ["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
+      "Telangana": ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahbubnagar", "Mancherial", "Medak", "Medchal-Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Rangareddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal Rural", "Warangal Urban", "Yadadri Bhuvanagiri"],
+      "Tripura": ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
+      "Uttar Pradesh": ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kheri", "Kushinagar", "Lalitpur", "Lucknow", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shrawasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"],
+      "Uttarakhand": ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
+      "West Bengal": ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"],
+      "Andaman and Nicobar Islands": ["Nicobar", "North and Middle Andaman", "South Andaman"],
+      "Chandigarh": ["Chandigarh"],
+      "Dadra and Nagar Haveli and Daman and Diu": ["Dadra and Nagar Haveli", "Daman", "Diu"],
+      "Delhi": ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
+      "Jammu and Kashmir": ["Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Jammu", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Srinagar", "Udhampur"],
+      "Ladakh": ["Kargil", "Leh"],
+      "Lakshadweep": ["Lakshadweep"],
+      "Puducherry": ["Karaikal", "Mahe", "Puducherry", "Yanam"]
+    };
+
+    let currentRecordCount = 0;
+    let imageData = {
+      aadhaarFront: null,
+      aadhaarBack: null,
+      profilePic: null,
+      cvFile: null
+    };
+
+    const dataHandler = {
+      onDataChanged(data) {
+        currentRecordCount = data.length;
+      }
+    };
+
+    async function initialize() {
+      if (window.dataSdk) {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (config) => {
+            document.getElementById('form-title').textContent = config.form_title || defaultConfig.form_title;
+            document.getElementById('card1-title').textContent = config.card1_title || defaultConfig.card1_title;
+            document.getElementById('card2-title').textContent = config.card2_title || defaultConfig.card2_title;
+            document.getElementById('submit-text').textContent = config.submit_button_text || defaultConfig.submit_button_text;
+
+            const bgColor = config.background_color || defaultConfig.background_color;
+            const cardBg = config.card_background || defaultConfig.card_background;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryBtn = config.primary_button_color || defaultConfig.primary_button_color;
+            const secondaryBtn = config.secondary_button_color || defaultConfig.secondary_button_color;
+
+            document.getElementById('app').style.background = `linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%)`;
+            document.getElementById('submit-btn').style.background = primaryBtn;
+            document.getElementById('reset-btn').style.background = secondaryBtn;
+          },
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || defaultConfig.background_color,
+                set: (value) => {
+                  config.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+              {
+                get: () => config.card_background || defaultConfig.card_background,
+                set: (value) => {
+                  config.card_background = value;
+                  window.elementSdk.setConfig({ card_background: value });
+                }
+              },
+              {
+                get: () => config.text_color || defaultConfig.text_color,
+                set: (value) => {
+                  config.text_color = value;
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              },
+              {
+                get: () => config.primary_button_color || defaultConfig.primary_button_color,
+                set: (value) => {
+                  config.primary_button_color = value;
+                  window.elementSdk.setConfig({ primary_button_color: value });
+                }
+              },
+              {
+                get: () => config.secondary_button_color || defaultConfig.secondary_button_color,
+                set: (value) => {
+                  config.secondary_button_color = value;
+                  window.elementSdk.setConfig({ secondary_button_color: value });
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["form_title", config.form_title || defaultConfig.form_title],
+            ["card1_title", config.card1_title || defaultConfig.card1_title],
+            ["card2_title", config.card2_title || defaultConfig.card2_title],
+            ["submit_button_text", config.submit_button_text || defaultConfig.submit_button_text]
+          ])
+        });
+      }
+
+      setupEventListeners();
+    }
+
+    function setupEventListeners() {
+      const stateSelect = document.getElementById('state');
+      const districtSelect = document.getElementById('district');
+      const agreeCheckbox = document.getElementById('agree-terms');
+      const submitBtn = document.getElementById('submit-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const form = document.getElementById('registration-form');
+
+      stateSelect.addEventListener('change', (e) => {
+        const state = e.target.value;
+        districtSelect.innerHTML = '<option value="" selected disabled>-- Select District --</option>';
+        
+        if (state && stateDistricts[state]) {
+          districtSelect.disabled = false;
+          stateDistricts[state].forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+          });
+        } else {
+          districtSelect.disabled = true;
+        }
+      });
+
+      agreeCheckbox.addEventListener('change', (e) => {
+        submitBtn.disabled = !e.target.checked;
+      });
+
+      const refereeRelationSelect = document.getElementById('referee-relation');
+      const otherRelationContainer = document.getElementById('other-relation-container');
+      
+      refereeRelationSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'Other') {
+          otherRelationContainer.style.display = 'block';
+        } else {
+          otherRelationContainer.style.display = 'none';
+          document.getElementById('other-relation').value = '';
+        }
+      });
+
+      setupFileInput('aadhaar-front', 'aadhaarFront');
+      setupFileInput('aadhaar-back', 'aadhaarBack');
+      setupFileInput('profile-pic', 'profilePic');
+      setupCVInput('cv-upload', 'cvFile');
+
+      resetBtn.addEventListener('click', resetForm);
+      form.addEventListener('submit', handleSubmit);
+    }
+
+    function setupFileInput(inputId, dataKey) {
+      const input = document.getElementById(inputId);
+      const previewContainer = document.getElementById(`${inputId}-preview`);
+
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            imageData[dataKey] = event.target.result;
+            showPreview(previewContainer, event.target.result, inputId, dataKey);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    function showPreview(container, src, inputId, dataKey) {
+      container.innerHTML = `
+        <div class="image-preview-container">
+          <img src="${src}" class="preview-image" alt="Preview">
+          <button type="button" class="delete-preview" onclick="deletePreview('${inputId}', '${dataKey}')">Delete</button>
+        </div>
+      `;
+    }
+
+    function setupCVInput(inputId, dataKey) {
+      const input = document.getElementById(inputId);
+      const previewContainer = document.getElementById(`${inputId}-preview`);
+
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            imageData[dataKey] = event.target.result;
+            showCVPreview(previewContainer, file.name, inputId, dataKey);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    function showCVPreview(container, fileName, inputId, dataKey) {
+      container.innerHTML = `
+        <div style="background: #ccfbf1; border: 2px solid #5eead4; border-radius: 8px; padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="color: #134e4a; font-weight: 500;">${fileName}</span>
+          <button type="button" onclick="deletePreview('${inputId}', '${dataKey}')" style="background: #ef4444; color: white; border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-size: 14px; font-weight: 600;">Delete</button>
+        </div>
+      `;
+    }
+
+    window.deletePreview = function(inputId, dataKey) {
+      const input = document.getElementById(inputId);
+      const previewContainer = document.getElementById(`${inputId}-preview`);
+      
+      input.value = '';
+      previewContainer.innerHTML = '';
+      imageData[dataKey] = null;
+    };
+
+    function resetForm() {
+      document.getElementById('registration-form').reset();
+      document.getElementById('district').disabled = true;
+      document.getElementById('district').innerHTML = '<option value="" selected disabled>-- Select District --</option>';
+      document.getElementById('agree-terms').checked = false;
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('success-message').style.display = 'none';
+      
+      document.getElementById('aadhaar-front-preview').innerHTML = '';
+      document.getElementById('aadhaar-back-preview').innerHTML = '';
+      document.getElementById('profile-pic-preview').innerHTML = '';
+      document.getElementById('cv-upload-preview').innerHTML = '';
+      
+      imageData = {
+        aadhaarFront: null,
+        aadhaarBack: null,
+        profilePic: null,
+        cvFile: null
+      };
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      if (currentRecordCount >= 999) {
+        const messageDiv = document.createElement('div');
+        messageDiv.style.cssText = 'background: #fee2e2; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; margin-top: 24px; text-align: center;';
+        messageDiv.innerHTML = '<p style="font-size: 18px; font-weight: 600; color: #991b1b; margin: 0;">Maximum limit of 999 applications reached. Please contact administrator.</p>';
+        document.getElementById('app').appendChild(messageDiv);
+        return;
+      }
+
+      const submitBtn = document.getElementById('submit-btn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Submitting...';
+
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address1: document.getElementById('address1').value,
+        address2: document.getElementById('address2').value,
+        address3: document.getElementById('address3').value,
+        state: document.getElementById('state').value,
+        district: document.getElementById('district').value,
+        pincode: document.getElementById('pincode').value,
+        aadhaar_front: imageData.aadhaarFront || '',
+        aadhaar_back: imageData.aadhaarBack || '',
+        profile_pic: imageData.profilePic || '',
+        cv_file: imageData.cvFile || '',
+        referee_name: document.getElementById('referee-name').value || '',
+        referee_contact: document.getElementById('referee-contact').value || '',
+        referee_relation: document.getElementById('referee-relation').value === 'Other' 
+          ? document.getElementById('other-relation').value 
+          : document.getElementById('referee-relation').value || '',
+        agreed_terms: true,
+        submitted_at: new Date().toISOString()
+      };
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create(formData);
+
+        if (result.isOk) {
+          document.getElementById('success-message').style.display = 'block';
+          setTimeout(() => {
+            resetForm();
+            document.getElementById('success-message').style.display = 'none';
+          }, 5000);
+        } else {
+          const errorDiv = document.createElement('div');
+          errorDiv.style.cssText = 'background: #fee2e2; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; margin-top: 24px; text-align: center;';
+          errorDiv.innerHTML = '<p style="font-size: 18px; font-weight: 600; color: #991b1b; margin: 0;">Application failed. Please try again.</p>';
+          document.getElementById('app').appendChild(errorDiv);
+          
+          setTimeout(() => errorDiv.remove(), 5000);
+        }
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+
+    initialize();
+  </script>
+{% endblock content %}
+    

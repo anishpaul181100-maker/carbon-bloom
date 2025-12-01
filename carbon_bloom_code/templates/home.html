@@ -6,7 +6,7 @@
     <div class="max-w-4xl mx-auto text-center">
       <h1 id="hero-headline" class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">Authentic Carbon Credits from Small Landholders.</h1>
       <p id="hero-subtext" class="text-lg sm:text-xl mb-8 opacity-95">Verified by local volunteers. Calculated by AI. Zero fraud.</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a style="text-decoration: none;" href="{% url 'reg_frm' %}"><button id="farmer-cta" class="btn-primary bg-white text-[#2E7D32] font-semibold px-8 py-3 rounded-lg w-full sm:w-auto"> Register as Farmer </button></a> <button id="volunteer-cta" class="btn-primary bg-transparent border-2 border-white text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto"> Register as Company </button>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a style="text-decoration: none;" href="{% url 'reg_frm' %}"><button id="farmer-cta" class="btn-primary bg-white text-[#2E7D32] font-semibold px-8 py-3 rounded-lg w-full sm:w-auto"> Register as Farmer </button></a> <a style="text-decoration: none;" href="{% url 'reg_comp' %}"><button id="volunteer-cta" class="btn-primary bg-transparent border-2 border-white text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto"> Register as Company </button></a>
       </div>
     </div>
   </section><!-- Visual Flow Section -->
@@ -114,13 +114,13 @@
       <svg class="w-20 h-20 mx-auto mb-4" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" fill="#2E7D32" opacity="0.1" /> <path d="M32 8L28 18L18 18L26 24L22 34L32 28L42 34L38 24L46 18L36 18L32 8Z" fill="#2E7D32" /> <rect x="30" y="34" width="4" height="12" fill="#2E7D32" /> <rect x="20" y="46" width="24" height="8" rx="2" fill="#2E7D32" />
       </svg>
       <h3 id="farmer-card-title" class="text-xl font-bold mb-3 text-[#2E7D32]">I'm a Farmer</h3>
-      <p id="farmer-card-text" class="text-gray-700 mb-6 text-sm">Register your land, get verified, and start earning from your environmental efforts.</p><button id="join-farmer-btn" class="btn-primary bg-[#2E7D32] text-white font-semibold px-6 py-3 rounded-lg w-full"> Register Your Land </button>
+      <p id="farmer-card-text" class="text-gray-700 mb-6 text-sm">Register your land, get verified, and start earning from your environmental efforts.</p><a href="{% url 'frm_login' %}" class="text-decoration: none;" ><button id="join-farmer-btn" class="btn-primary bg-[#2E7D32] text-white font-semibold px-6 py-3 rounded-lg w-full"> Register Your Land </button></a>
      </div><!-- Volunteer Card -->
      <div class="bg-[#A5D6A7] bg-opacity-20 border-2 border-[#A5D6A7] rounded-xl p-8">
       <svg class="w-20 h-20 mx-auto mb-4" viewbox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="30" fill="#2E7D32" opacity="0.1" /> <circle cx="32" cy="22" r="8" fill="#2E7D32" /> <path d="M18 50C18 40 24 36 32 36C40 36 46 40 46 50" fill="#2E7D32" /> <path d="M40 28L46 32L40 36" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
       <h3 id="volunteer-card-title" class="text-xl font-bold mb-3 text-[#2E7D32]">I'm a Volunteer</h3>
-      <p id="volunteer-card-text" class="text-gray-700 mb-6 text-sm">Help verify projects in your area and ensure the authenticity of carbon credits.</p><button id="join-volunteer-btn" class="btn-primary bg-[#2E7D32] text-white font-semibold px-6 py-3 rounded-lg w-full"> Become a Volunteer </button>
+      <p id="volunteer-card-text" class="text-gray-700 mb-6 text-sm">Help verify projects in your area and ensure the authenticity of carbon credits.</p><a href="{% url 'vol_apply' %}" class="text-decoration: none;"><button id="join-volunteer-btn" class="btn-primary bg-[#2E7D32] text-white font-semibold px-6 py-3 rounded-lg w-full"> Become a Volunteer </button>
      </div>
     </div>
    </div>

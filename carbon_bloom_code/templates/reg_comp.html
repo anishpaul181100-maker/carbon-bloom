@@ -1,0 +1,1131 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <style>
+        body {
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+        }
+        
+        * {
+        box-sizing: border-box;
+        }
+
+        .gradient-bg {
+        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #5eead4 100%);
+        }
+
+        .form-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 30px rgba(13, 148, 136, 0.15);
+        border: 1px solid #ccfbf1;
+        }
+
+        .section-header {
+        margin-bottom: 32px;
+        padding-bottom: 20px;
+        border-bottom: 4px solid #14b8a6;
+        position: relative;
+        }
+
+        .section-header::before {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: #0d9488;
+        }
+
+        .section-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #0f766e;
+        margin: 0;
+        letter-spacing: -0.5px;
+        }
+
+        .form-input {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #99f6e4;
+        border-radius: 10px;
+        font-size: 15px;
+        transition: all 0.3s;
+        background: white;
+        }
+
+        .form-input:focus {
+        outline: none;
+        border-color: #14b8a6;
+        box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+        }
+
+        .form-label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #0f766e;
+        font-size: 14px;
+        letter-spacing: 0.3px;
+        }
+
+        .required {
+        color: #dc2626;
+        }
+
+        .file-upload-btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        border: 3px dashed #5eead4;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+        color: #0f766e;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 15px;
+        }
+
+        .file-upload-btn:hover {
+        background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+        border-color: #14b8a6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+        }
+
+        .preview-container {
+        position: relative;
+        display: inline-block;
+        margin-top: 12px;
+        }
+
+        .preview-image {
+        max-width: 200px;
+        max-height: 150px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 3px solid #99f6e4;
+        }
+
+        .delete-preview {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #dc2626;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+        font-weight: 700;
+        }
+
+        .delete-preview:hover {
+        background: #b91c1c;
+        transform: scale(1.1);
+        }
+
+        .btn-primary {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        color: white;
+        padding: 16px 40px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 17px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+        letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(20, 184, 166, 0.5);
+        }
+
+        .btn-primary:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+        }
+
+        .btn-secondary {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        padding: 16px 40px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 800;
+        font-size: 17px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        letter-spacing: 0.5px;
+        }
+
+        .btn-secondary:hover {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.5);
+        }
+
+        .subsection-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #0f766e;
+        margin: 32px 0 20px;
+        padding-left: 16px;
+        border-left: 6px solid #5eead4;
+        letter-spacing: -0.3px;
+        }
+
+        .password-requirement {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 8px;
+        }
+
+        .password-requirement.met {
+        color: #059669;
+        font-weight: 600;
+        }
+
+        .password-requirement .req-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        }
+
+        .password-requirement .req-icon.unchecked {
+        background: #e5e7eb;
+        color: #9ca3af;
+        }
+
+        .password-requirement .req-icon.checked {
+        background: #10b981;
+        color: white;
+        }
+
+        .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        }
+
+        .loading-spinner {
+        width: 70px;
+        height: 70px;
+        border: 7px solid #f3f4f6;
+        border-top: 7px solid #14b8a6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+        .manager-card {
+        background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%);
+        border: 3px solid #99f6e4;
+        border-radius: 16px;
+        padding: 28px;
+        margin-bottom: 20px;
+        }
+
+        .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        }
+
+        .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+        .grid-2, .grid-3 {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .form-card {
+            padding: 24px 20px;
+        }
+
+        .main-header {
+            padding: 32px 24px !important;
+        }
+
+        .main-title {
+            font-size: 36px !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        .main-subtitle {
+            font-size: 16px !important;
+        }
+
+        .section-title {
+            font-size: 22px;
+        }
+
+        .subsection-title {
+            font-size: 18px;
+            margin: 24px 0 16px;
+        }
+
+        .form-input {
+            padding: 12px 14px;
+            font-size: 16px;
+        }
+
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 15px;
+        }
+
+        .header-badge {
+            font-size: 12px;
+            padding: 6px 16px;
+        }
+
+        .preview-image {
+            max-width: 100%;
+        }
+
+        .password-requirement {
+            font-size: 13px;
+        }
+        }
+
+        @media (max-width: 480px) {
+        .main-header {
+            padding: 24px 16px !important;
+            border-radius: 16px !important;
+        }
+
+        .main-title {
+            font-size: 28px !important;
+        }
+
+        .main-subtitle {
+            font-size: 14px !important;
+        }
+
+        .section-title {
+            font-size: 20px;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+        }
+
+        .form-label {
+            font-size: 13px;
+        }
+
+        .form-card {
+            padding: 20px 16px;
+            border-radius: 16px;
+        }
+
+        .file-upload-btn {
+            padding: 14px;
+            font-size: 14px;
+        }
+
+        .button-group {
+            flex-direction: column;
+            gap: 16px !important;
+        }
+
+        .loading-overlay p {
+            font-size: 16px !important;
+            padding: 0 20px;
+        }
+
+        .loading-spinner {
+            width: 50px !important;
+            height: 50px !important;
+        }
+        }
+
+        input[type="file"] {
+        display: none;
+        }
+
+        .header-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        letter-spacing: 1px;
+        }
+    </style>
+
+    <div id="loading" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p style="color: white; font-size: 20px; font-weight: 700; margin-top: 28px; letter-spacing: 0.5px;">Submitting Registration...</p>
+    </div>
+    <div class="w-full" style="padding: 50px 20px;">
+    <div style="max-width: 1200px; margin: 0 auto;"><!-- Header -->
+        <div class="main-header" style="background: white; border-radius: 24px; padding: 50px; text-align: center; margin-bottom: 40px; box-shadow: 0 15px 40px rgba(13, 148, 136, 0.2); border: 2px solid #ccfbf1;">
+        <div class="header-badge">
+        CARBONBLOOM
+        </div>
+        <h1 id="page-title" class="main-title" style="font-size: 52px; font-weight: 900; background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0 0 16px 0; letter-spacing: -1px;">Company Registration</h1>
+        <p id="page-subtitle" class="main-subtitle" style="font-size: 19px; color: #0f766e; font-weight: 600; margin: 0; letter-spacing: 0.3px;">Join Our Sustainable Agriculture Platform</p>
+        </div>
+        <form id="registrationForm"><!-- CARD 1: Owner Details -->
+        <div class="form-card">
+        <div class="section-header">
+        <h2 class="section-title">Owner Details</h2>
+        </div>
+        <div class="grid-3" style="margin-bottom: 24px;">
+        <div><label class="form-label">Full Name <span class="required">*</span></label> <input type="text" id="owner_name" class="form-input" required placeholder="Enter full name">
+        </div>
+        <div><label class="form-label">Email Address <span class="required">*</span></label> <input type="email" id="owner_email" class="form-input" required placeholder="email@example.com">
+        </div>
+        <div><label class="form-label">Phone Number <span class="required">*</span></label> <input type="tel" id="owner_phone" class="form-input" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+        </div>
+        </div>
+        <div class="grid-3" style="margin-bottom: 24px;">
+        <div><label class="form-label">Address Line 1 <span class="required">*</span></label> <textarea id="owner_address1" class="form-input" required rows="2" placeholder="House/Flat No., Street"></textarea>
+        </div>
+        <div><label class="form-label">Address Line 2 <span class="required">*</span></label> <textarea id="owner_address2" class="form-input" required rows="2" placeholder="Locality, Area"></textarea>
+        </div>
+        <div><label class="form-label">Address Line 3</label> <textarea id="owner_address3" class="form-input" rows="2" placeholder="Landmark (Optional)"></textarea>
+        </div>
+        </div>
+        <div class="grid-3" style="margin-bottom: 24px;">
+        <div><label class="form-label">State/UT <span class="required">*</span></label> <select id="owner_state" class="form-input" required> <option value="" disabled selected>-- Select State/UT --</option> </select>
+        </div>
+        <div><label class="form-label">District <span class="required">*</span></label> <select id="owner_district" class="form-input" required> <option value="" disabled selected>-- Select District --</option> </select>
+        </div>
+        <div><label class="form-label">Pin Code <span class="required">*</span></label> <input type="text" id="owner_pincode" class="form-input" required pattern="[0-9]{6}" placeholder="6-digit PIN">
+        </div>
+        </div>
+        <div class="grid-3">
+        <div><label class="form-label">Aadhaar Front <span class="required">*</span></label> <label for="aadhaar_front" class="file-upload-btn"> UPLOAD AADHAAR FRONT </label> <input type="file" id="aadhaar_front" accept="image/*" required>
+            <div id="preview_aadhaar_front"></div>
+        </div>
+        <div><label class="form-label">Aadhaar Back <span class="required">*</span></label> <label for="aadhaar_back" class="file-upload-btn"> UPLOAD AADHAAR BACK </label> <input type="file" id="aadhaar_back" accept="image/*" required>
+            <div id="preview_aadhaar_back"></div>
+        </div>
+        <div><label class="form-label">Profile Picture <span class="required">*</span></label> <label for="profile_pic" class="file-upload-btn"> UPLOAD PROFILE PHOTO </label> <input type="file" id="profile_pic" accept="image/*" required>
+            <div id="preview_profile_pic"></div>
+        </div>
+        </div>
+        </div><!-- CARD 2: Company Details -->
+        <div class="form-card">
+        <div class="section-header">
+        <h2 class="section-title">Company Details</h2>
+        </div>
+        <div class="grid-3" style="margin-bottom: 24px;">
+        <div><label class="form-label">Company Name <span class="required">*</span></label> <input type="text" id="company_name" class="form-input" required placeholder="Enter company name">
+        </div>
+        <div><label class="form-label">CIN <span class="required">*</span></label> <input type="text" id="company_cin" class="form-input" required placeholder="Corporate Identification Number">
+        </div>
+        <div><label class="form-label">Established Year <span class="required">*</span></label> <input type="number" id="company_estd" class="form-input" required min="1800" max="2024" placeholder="YYYY">
+        </div>
+        </div>
+        <h3 class="subsection-title">Company Documents</h3>
+        <div class="grid-2" style="margin-bottom: 24px;">
+        <div><label class="form-label">Memorandum of Association (MOA) <span class="required">*</span></label> <label for="moa_doc" class="file-upload-btn"> UPLOAD MOA DOCUMENT </label> <input type="file" id="moa_doc" accept="image/*,.pdf" required>
+            <div id="preview_moa_doc"></div>
+        </div>
+        <div><label class="form-label">Articles of Association (AOA) <span class="required">*</span></label> <label for="aoa_doc" class="file-upload-btn"> UPLOAD AOA DOCUMENT </label> <input type="file" id="aoa_doc" accept="image/*,.pdf" required>
+            <div id="preview_aoa_doc"></div>
+        </div>
+        </div>
+        <h3 class="subsection-title">Director &amp; Shareholder Documents</h3>
+        <div class="grid-2" style="margin-bottom: 24px;">
+        <div><label class="form-label">Identity Proof <span class="required">*</span></label> <input type="text" id="identity_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="identity_proof" class="file-upload-btn"> UPLOAD IDENTITY PROOF </label> <input type="file" id="identity_proof" accept="image/*,.pdf" required>
+            <div id="preview_identity_proof"></div>
+        </div>
+        <div><label class="form-label">Address Proof <span class="required">*</span></label> <input type="text" id="address_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="address_proof" class="file-upload-btn"> UPLOAD ADDRESS PROOF </label> <input type="file" id="address_proof" accept="image/*,.pdf" required>
+            <div id="preview_address_proof"></div>
+        </div>
+        </div>
+        <div class="grid-2" style="margin-bottom: 24px;">
+        <div><label class="form-label">Photograph <span class="required">*</span></label> <input type="text" id="photo_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="photo_doc" class="file-upload-btn"> UPLOAD PHOTOGRAPH </label> <input type="file" id="photo_doc" accept="image/*" required>
+            <div id="preview_photo_doc"></div>
+        </div>
+        <div><label class="form-label">PAN Card <span class="required">*</span></label> <input type="text" id="pan_id" class="form-input" placeholder="PAN Number (Optional)" style="margin-bottom: 10px;"> <label for="pan_card" class="file-upload-btn"> UPLOAD PAN CARD </label> <input type="file" id="pan_card" accept="image/*,.pdf" required>
+            <div id="preview_pan_card"></div>
+        </div>
+        </div>
+        <h3 class="subsection-title">Technical Documents</h3>
+        <div class="grid-2" style="margin-bottom: 24px;">
+        <div><label class="form-label">DIN Document <span class="required">*</span></label> <input type="text" id="din_id" class="form-input" placeholder="DIN Number (Optional)" style="margin-bottom: 10px;"> <label for="din_doc" class="file-upload-btn"> UPLOAD DIN DOCUMENT </label> <input type="file" id="din_doc" accept="image/*,.pdf" required>
+            <div id="preview_din_doc"></div>
+        </div>
+        <div><label class="form-label">DSC Document <span class="required">*</span></label> <input type="text" id="dsc_id" class="form-input" placeholder="DSC Number (Optional)" style="margin-bottom: 10px;"> <label for="dsc_doc" class="file-upload-btn"> UPLOAD DSC DOCUMENT </label> <input type="file" id="dsc_doc" accept="image/*,.pdf" required>
+            <div id="preview_dsc_doc"></div>
+        </div>
+        </div>
+        <h3 class="subsection-title">Office Documents</h3>
+        <div class="grid-3" style="margin-bottom: 24px;">
+        <div><label class="form-label">Office Address Proof <span class="required">*</span></label> <input type="text" id="office_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="office_proof" class="file-upload-btn"> UPLOAD OFFICE PROOF </label> <input type="file" id="office_proof" accept="image/*,.pdf" required>
+            <div id="preview_office_proof"></div>
+        </div>
+        <div><label class="form-label">NOC Document <span class="required">*</span></label> <input type="text" id="noc_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="noc_doc" class="file-upload-btn"> UPLOAD NOC </label> <input type="file" id="noc_doc" accept="image/*,.pdf" required>
+            <div id="preview_noc_doc"></div>
+        </div>
+        <div><label class="form-label">Lease/Rent Agreement <span class="required">*</span></label> <input type="text" id="lease_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="lease_doc" class="file-upload-btn"> UPLOAD LEASE </label> <input type="file" id="lease_doc" accept="image/*,.pdf" required>
+            <div id="preview_lease_doc"></div>
+        </div>
+        </div>
+        <h3 class="subsection-title">Declaration Forms</h3>
+        <div class="grid-3">
+        <div><label class="form-label">Declaration <span class="required">*</span></label> <input type="text" id="declaration_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="declaration_doc" class="file-upload-btn"> UPLOAD DECLARATION </label> <input type="file" id="declaration_doc" accept="image/*,.pdf" required>
+            <div id="preview_declaration_doc"></div>
+        </div>
+        <div><label class="form-label">Form DIR-2 <span class="required">*</span></label> <input type="text" id="dir2_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="dir2_form" class="file-upload-btn"> UPLOAD FORM DIR-2 </label> <input type="file" id="dir2_form" accept="image/*,.pdf" required>
+            <div id="preview_dir2_form"></div>
+        </div>
+        <div><label class="form-label">Form INC-9 <span class="required">*</span></label> <input type="text" id="inc9_id" class="form-input" placeholder="ID Number (Optional)" style="margin-bottom: 10px;"> <label for="inc9_form" class="file-upload-btn"> UPLOAD FORM INC-9 </label> <input type="file" id="inc9_form" accept="image/*,.pdf" required>
+            <div id="preview_inc9_form"></div>
+        </div>
+        </div>
+        </div><!-- CARD 3: Manager Details -->
+        <div class="form-card">
+        <div class="section-header">
+        <h2 class="section-title">Manager Details</h2>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 20px; flex-wrap: wrap;">
+        <p style="color: #0f766e; font-size: 15px; font-weight: 600; margin: 0;">Add up to 2 managers (Optional). They will receive system-generated credentials via email.</p><button type="button" id="addManagerBtn" class="btn-primary" style="padding: 12px 24px; font-size: 15px;"> ADD MANAGER </button>
+        </div>
+        <div id="managersContainer"></div>
+        </div><!-- CARD 4: Password & Verification -->
+        <div class="form-card">
+        <div class="section-header">
+        <h2 class="section-title">Security &amp; Verification</h2>
+        </div>
+        <div class="grid-2" style="margin-bottom: 28px;">
+        <div><label class="form-label">Create Password <span class="required">*</span></label>
+            <div style="position: relative;"><input type="password" id="password" class="form-input" required placeholder="Enter password" style="padding-right: 55px;"> <button type="button" id="togglePassword" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: #14b8a6; color: white; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; font-size: 18px; display: flex; align-items: center; justify-content: center; font-weight: 700;">•</button>
+            </div>
+            <div style="margin-top: 16px; padding: 20px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-radius: 12px; border: 2px solid #99f6e4;">
+            <p style="font-size: 14px; font-weight: 800; color: #0f766e; margin-bottom: 14px; letter-spacing: 0.3px;">PASSWORD REQUIREMENTS:</p>
+            <div id="req-length" class="password-requirement"><span class="req-icon unchecked"></span> <span>8-10 characters</span>
+            </div>
+            <div id="req-upper" class="password-requirement"><span class="req-icon unchecked"></span> <span>One uppercase letter</span>
+            </div>
+            <div id="req-lower" class="password-requirement"><span class="req-icon unchecked"></span> <span>One lowercase letter</span>
+            </div>
+            <div id="req-number" class="password-requirement"><span class="req-icon unchecked"></span> <span>One number</span>
+            </div>
+            <div id="req-special" class="password-requirement"><span class="req-icon unchecked"></span> <span>One special character (!@#$%^&amp;*)</span>
+            </div>
+            </div>
+        </div>
+        <div><label class="form-label">Confirm Password <span class="required">*</span></label>
+            <div style="position: relative;"><input type="password" id="confirmPassword" class="form-input" required placeholder="Re-enter password" style="padding-right: 55px;"> <button type="button" id="toggleConfirmPassword" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: #14b8a6; color: white; border: none; cursor: pointer; width: 36px; height: 36px; border-radius: 8px; font-size: 18px; display: flex; align-items: center; justify-content: center; font-weight: 700;">•</button>
+            </div>
+            <div id="passwordMatch" style="display: none; margin-top: 16px; padding: 20px; border-radius: 12px; border: 2px solid;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+            <div id="matchIcon" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;"></div><span id="matchText" style="font-size: 15px; font-weight: 700; letter-spacing: 0.3px;"></span>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div><label class="form-label">Verification <span class="required">*</span></label>
+        <div style="padding: 24px; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-radius: 12px; border: 2px solid #99f6e4;"><label style="display: flex; align-items: center; cursor: pointer; font-size: 17px; color: #0f766e; font-weight: 700;"> <input type="checkbox" id="verificationCheckbox" style="width: 24px; height: 24px; margin-right: 14px; cursor: pointer; accent-color: #14b8a6;"> <span>I confirm I am not a robot <span class="required">*</span></span> </label>
+        </div>
+        </div>
+        </div><!-- CARD 5: Terms & Conditions -->
+        <div class="form-card">
+        <div class="section-header">
+        <h2 class="section-title">Terms and Conditions</h2>
+        </div>
+        <div style="background: linear-gradient(135deg, #f9fafb 0%, #f0fdfa 100%); padding: 28px; border-radius: 14px; max-height: 340px; overflow-y: auto; border: 2px solid #ccfbf1; margin-bottom: 24px;">
+        <p style="color: #0f766e; font-size: 16px; font-weight: 800; margin-bottom: 16px; letter-spacing: 0.3px;">By registering on CarbonBloom, you agree to the following:</p>
+        <ul style="color: #14532d; font-size: 15px; line-height: 2; padding-left: 24px; font-weight: 500;">
+            <li>All information provided is accurate and truthful</li>
+            <li>All uploaded documents are genuine and legally valid</li>
+            <li>You have the authority to register this company</li>
+            <li>You agree to comply with all applicable laws and regulations</li>
+            <li>You consent to the processing of provided data for registration purposes</li>
+            <li>Manager access details will be shared via secure channels</li>
+            <li>You are responsible for maintaining credential confidentiality</li>
+            <li>You commit to sustainable farming practices and transparency</li>
+        </ul>
+        </div><label style="display: flex; align-items: center; cursor: pointer; font-size: 17px; color: #0f766e; font-weight: 700;"> <input type="checkbox" id="termsCheckbox" style="width: 24px; height: 24px; margin-right: 14px; cursor: pointer; accent-color: #14b8a6;"> <span>I agree to the terms and conditions <span class="required">*</span></span> </label>
+        </div><!-- Submit Buttons -->
+        <div class="button-group" style="display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 40px;"><button type="button" id="resetBtn" class="btn-secondary"> RESET FORM </button> <button type="submit" id="registerBtn" class="btn-primary" disabled> <span id="submit-button-text">COMPLETE REGISTRATION</span> </button>
+        </div>
+        </form><!-- Success Message -->
+        <div id="successMessage" style="display: none; margin-top: 40px; padding: 40px; background: white; border: 5px solid #10b981; border-radius: 20px; text-align: center; box-shadow: 0 15px 40px rgba(16, 185, 129, 0.3);">
+        <div style="width: 80px; height: 80px; background: #10b981; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: white; font-weight: 900;">
+        ✓
+        </div>
+        <p style="color: #065f46; font-size: 32px; font-weight: 900; margin-bottom: 16px; letter-spacing: -0.5px;">Registration Successful!</p>
+        <p style="color: #059669; font-size: 18px; font-weight: 600;">Welcome to CarbonBloom! Your registration has been submitted successfully.</p>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const defaultConfig = {
+        page_title: "Company Registration",
+        page_subtitle: "Join Our Sustainable Agriculture Platform",
+        submit_button_text: "Complete Registration"
+        };
+
+        let managers = [];
+        let managerCount = 0;
+
+        const statesDistricts = {
+        "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Prakasam", "Srikakulam", "Sri Potti Sriramulu Nellore", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
+        "Arunachal Pradesh": ["Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"],
+        "Assam": ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metropolitan", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukudi", "Udalguri", "West Karbi Anglong"],
+        "Bihar": ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
+        "Chhattisgarh": ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Gariaband", "Janjgir-Champa", "Jashpur", "Kabirdham", "Kanker", "Kondagaon", "Korba", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sukma", "Surajpur", "Surguja"],
+        "Goa": ["North Goa", "South Goa"],
+        "Gujarat": ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
+        "Haryana": ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
+        "Himachal Pradesh": ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"],
+        "Jharkhand": ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahibganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
+        "Karnataka": ["Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagar", "Chikkaballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"],
+        "Kerala": ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
+        "Madhya Pradesh": ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
+        "Maharashtra": ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
+        "Manipur": ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
+        "Meghalaya": ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
+        "Mizoram": ["Aizawl", "Champhai", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saiha", "Serchhip"],
+        "Nagaland": ["Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Peren", "Phek", "Tuensang", "Wokha", "Zunheboto"],
+        "Odisha": ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Debagarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"],
+        "Punjab": ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Mansa", "Moga", "Muktsar", "Pathankot", "Patiala", "Rupnagar", "Sangrur", "SAS Nagar", "Shaheed Bhagat Singh Nagar", "Tarn Taran"],
+        "Rajasthan": ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
+        "Sikkim": ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"],
+        "Tamil Nadu": ["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
+        "Telangana": ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahabubnagar", "Mancherial", "Medak", "Medchal-Malkajgiri", "Nagarkurnool", "Nalgonda", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Rangareddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal Rural", "Warangal Urban", "Yadadri Bhuvanagiri"],
+        "Tripura": ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
+        "Uttar Pradesh": ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Ayodhya", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kushinagar", "Lakhimpur Kheri", "Lalitpur", "Lucknow", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"],
+        "Uttarakhand": ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
+        "West Bengal": ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"],
+        "Andaman and Nicobar Islands": ["Nicobar", "North and Middle Andaman", "South Andaman"],
+        "Chandigarh": ["Chandigarh"],
+        "Dadra and Nagar Haveli and Daman and Diu": ["Dadra and Nagar Haveli", "Daman", "Diu"],
+        "Delhi": ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
+        "Jammu and Kashmir": ["Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Jammu", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Srinagar", "Udhampur"],
+        "Ladakh": ["Kargil", "Leh"],
+        "Lakshadweep": ["Lakshadweep"],
+        "Puducherry": ["Karaikal", "Mahe", "Puducherry", "Yanam"]
+        };
+
+        // Populate states
+        const stateSelect = document.getElementById('owner_state');
+        Object.keys(statesDistricts).sort().forEach(state => {
+        const option = document.createElement('option');
+        option.value = state;
+        option.textContent = state;
+        stateSelect.appendChild(option);
+        });
+
+        // Handle state change
+        stateSelect.addEventListener('change', function() {
+        const districtSelect = document.getElementById('owner_district');
+        districtSelect.innerHTML = '<option value="" disabled selected>-- Select District --</option>';
+        
+        if (this.value) {
+            const districts = statesDistricts[this.value];
+            districts.forEach(district => {
+            const option = document.createElement('option');
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+            });
+        }
+        });
+
+        // Image preview functionality
+        function setupImagePreview(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+
+        input.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.innerHTML = `
+                <div class="preview-container">
+                    <img src="${e.target.result}" alt="Preview" class="preview-image">
+                    <button type="button" class="delete-preview" onclick="removePreview('${inputId}', '${previewId}')">×</button>
+                </div>
+                `;
+            };
+            reader.readAsDataURL(file);
+            }
+        });
+        }
+
+        function removePreview(inputId, previewId) {
+        document.getElementById(inputId).value = '';
+        document.getElementById(previewId).innerHTML = '';
+        }
+
+        // Setup all image previews
+        const fileInputs = ['aadhaar_front', 'aadhaar_back', 'profile_pic', 'moa_doc', 'aoa_doc', 'identity_proof', 'address_proof', 'photo_doc', 'pan_card', 'din_doc', 'dsc_doc', 'office_proof', 'noc_doc', 'lease_doc', 'declaration_doc', 'dir2_form', 'inc9_form'];
+        fileInputs.forEach(id => setupImagePreview(id, `preview_${id}`));
+
+        // Manager functionality
+        document.getElementById('addManagerBtn').addEventListener('click', function() {
+        if (managerCount >= 2) {
+            showNotification('Maximum 2 managers allowed', 'error');
+            return;
+        }
+
+        const managerId = `manager_${Date.now()}`;
+        managerCount++;
+
+        const managerCard = document.createElement('div');
+        managerCard.className = 'manager-card';
+        managerCard.id = managerId;
+        managerCard.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 20px; font-weight: 800; color: #0f766e; letter-spacing: -0.3px;">MANAGER ${managerCount}</h3>
+            <button type="button" onclick="removeManager('${managerId}')" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">REMOVE</button>
+            </div>
+            
+            <div class="grid-3" style="margin-bottom: 20px;">
+            <div>
+                <label class="form-label">Name <span class="required">*</span></label>
+                <input type="text" class="form-input manager-field" required placeholder="Enter full name">
+            </div>
+            <div>
+                <label class="form-label">Email <span class="required">*</span></label>
+                <input type="email" class="form-input manager-field" required placeholder="email@example.com">
+            </div>
+            <div>
+                <label class="form-label">Phone <span class="required">*</span></label>
+                <input type="tel" class="form-input manager-field" required pattern="[0-9]{10}" placeholder="10-digit mobile">
+            </div>
+            </div>
+
+            <div class="grid-3" style="margin-bottom: 20px;">
+            <div>
+                <label class="form-label">Address Line 1 <span class="required">*</span></label>
+                <textarea class="form-input manager-field" required rows="2" placeholder="House/Flat No."></textarea>
+            </div>
+            <div>
+                <label class="form-label">Address Line 2 <span class="required">*</span></label>
+                <textarea class="form-input manager-field" required rows="2" placeholder="Locality"></textarea>
+            </div>
+            <div>
+                <label class="form-label">Address Line 3</label>
+                <textarea class="form-input manager-field" rows="2" placeholder="Landmark (Optional)"></textarea>
+            </div>
+            </div>
+
+            <div class="grid-3" style="margin-bottom: 20px;">
+            <div>
+                <label class="form-label">State/UT <span class="required">*</span></label>
+                <select class="form-input manager-field manager-state" required>
+                <option value="" disabled selected>-- Select State/UT --</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label">District <span class="required">*</span></label>
+                <select class="form-input manager-field manager-district" required>
+                <option value="" disabled selected>-- Select District --</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label">Pin Code <span class="required">*</span></label>
+                <input type="text" class="form-input manager-field" required pattern="[0-9]{6}" placeholder="6-digit PIN">
+            </div>
+            </div>
+
+            <div class="grid-3">
+            <div>
+                <label class="form-label">Aadhaar Front <span class="required">*</span></label>
+                <label for="${managerId}_aadhaar_front" class="file-upload-btn">UPLOAD</label>
+                <input type="file" id="${managerId}_aadhaar_front" class="manager-field" accept="image/*" required>
+                <div id="preview_${managerId}_aadhaar_front"></div>
+            </div>
+            <div>
+                <label class="form-label">Aadhaar Back <span class="required">*</span></label>
+                <label for="${managerId}_aadhaar_back" class="file-upload-btn">UPLOAD</label>
+                <input type="file" id="${managerId}_aadhaar_back" class="manager-field" accept="image/*" required>
+                <div id="preview_${managerId}_aadhaar_back"></div>
+            </div>
+            <div>
+                <label class="form-label">Profile Picture <span class="required">*</span></label>
+                <label for="${managerId}_profile_pic" class="file-upload-btn">UPLOAD</label>
+                <input type="file" id="${managerId}_profile_pic" class="manager-field" accept="image/*" required>
+                <div id="preview_${managerId}_profile_pic"></div>
+            </div>
+            </div>
+        `;
+
+        document.getElementById('managersContainer').appendChild(managerCard);
+
+        // Populate state dropdown
+        const stateSelect = managerCard.querySelector('.manager-state');
+        Object.keys(statesDistricts).sort().forEach(state => {
+            const option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        });
+
+        // State-district dependency
+        stateSelect.addEventListener('change', function() {
+            const districtSelect = managerCard.querySelector('.manager-district');
+            districtSelect.innerHTML = '<option value="" disabled selected>-- Select District --</option>';
+            
+            if (this.value) {
+            const districts = statesDistricts[this.value];
+            districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+            }
+        });
+
+        // Setup image previews
+        setupImagePreview(`${managerId}_aadhaar_front`, `preview_${managerId}_aadhaar_front`);
+        setupImagePreview(`${managerId}_aadhaar_back`, `preview_${managerId}_aadhaar_back`);
+        setupImagePreview(`${managerId}_profile_pic`, `preview_${managerId}_profile_pic`);
+        });
+
+        function removeManager(managerId) {
+        document.getElementById(managerId).remove();
+        managerCount--;
+        
+        const remainingManagers = document.querySelectorAll('.manager-card');
+        remainingManagers.forEach((card, index) => {
+            const heading = card.querySelector('h3');
+            heading.textContent = `MANAGER ${index + 1}`;
+        });
+        }
+
+        // Password validation
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordMatch = document.getElementById('passwordMatch');
+
+        let passwordRequirements = {
+        length: false,
+        upper: false,
+        lower: false,
+        number: false,
+        special: false
+        };
+
+        function updateRequirement(id, met) {
+        const element = document.getElementById(id);
+        const icon = element.querySelector('.req-icon');
+        if (met) {
+            icon.classList.remove('unchecked');
+            icon.classList.add('checked');
+            element.classList.add('met');
+        } else {
+            icon.classList.remove('checked');
+            icon.classList.add('unchecked');
+            element.classList.remove('met');
+        }
+        }
+
+        function validatePassword(password) {
+        passwordRequirements.length = password.length >= 8 && password.length <= 10;
+        updateRequirement('req-length', passwordRequirements.length);
+
+        passwordRequirements.upper = /[A-Z]/.test(password);
+        updateRequirement('req-upper', passwordRequirements.upper);
+
+        passwordRequirements.lower = /[a-z]/.test(password);
+        updateRequirement('req-lower', passwordRequirements.lower);
+
+        passwordRequirements.number = /[0-9]/.test(password);
+        updateRequirement('req-number', passwordRequirements.number);
+
+        passwordRequirements.special = /[!@#$%^&*]/.test(password);
+        updateRequirement('req-special', passwordRequirements.special);
+
+        return Object.values(passwordRequirements).every(req => req);
+        }
+
+        function checkPasswordMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        if (confirmPassword.length === 0) {
+            passwordMatch.style.display = 'none';
+            return false;
+        }
+
+        passwordMatch.style.display = 'block';
+
+        if (password === confirmPassword && validatePassword(password)) {
+            passwordMatch.style.background = 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)';
+            passwordMatch.style.borderColor = '#10b981';
+            document.getElementById('matchIcon').style.background = '#10b981';
+            document.getElementById('matchIcon').style.color = 'white';
+            document.getElementById('matchIcon').textContent = '✓';
+            document.getElementById('matchText').textContent = 'PASSWORDS MATCH!';
+            document.getElementById('matchText').style.color = '#065f46';
+            return true;
+        } else {
+            passwordMatch.style.background = 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)';
+            passwordMatch.style.borderColor = '#ef4444';
+            document.getElementById('matchIcon').style.background = '#ef4444';
+            document.getElementById('matchIcon').style.color = 'white';
+            document.getElementById('matchIcon').textContent = '×';
+            document.getElementById('matchText').textContent = 'PASSWORDS DO NOT MATCH';
+            document.getElementById('matchText').style.color = '#991b1b';
+            return false;
+        }
+        }
+
+        passwordInput.addEventListener('input', function() {
+        validatePassword(this.value);
+        if (confirmPasswordInput.value.length > 0) {
+            checkPasswordMatch();
+        }
+        checkFormValidity();
+        });
+
+        confirmPasswordInput.addEventListener('input', function() {
+        checkPasswordMatch();
+        checkFormValidity();
+        });
+
+        // Password toggle
+        let passwordVisible = false;
+        document.getElementById('togglePassword').addEventListener('click', function() {
+        passwordVisible = !passwordVisible;
+        passwordInput.setAttribute('type', passwordVisible ? 'text' : 'password');
+        this.textContent = passwordVisible ? '○' : '•';
+        });
+
+        let confirmPasswordVisible = false;
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+        confirmPasswordVisible = !confirmPasswordVisible;
+        confirmPasswordInput.setAttribute('type', confirmPasswordVisible ? 'text' : 'password');
+        this.textContent = confirmPasswordVisible ? '○' : '•';
+        });
+
+        // Form validation
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const verificationCheckbox = document.getElementById('verificationCheckbox');
+        const registerBtn = document.getElementById('registerBtn');
+
+        function checkFormValidity() {
+        const passwordValid = validatePassword(passwordInput.value);
+        const passwordsMatch = passwordInput.value === confirmPasswordInput.value && confirmPasswordInput.value.length > 0;
+        const termsAccepted = termsCheckbox.checked;
+        const verificationChecked = verificationCheckbox.checked;
+
+        if (passwordValid && passwordsMatch && termsAccepted && verificationChecked) {
+            registerBtn.disabled = false;
+        } else {
+            registerBtn.disabled = true;
+        }
+        }
+
+        termsCheckbox.addEventListener('change', checkFormValidity);
+        verificationCheckbox.addEventListener('change', checkFormValidity);
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 18px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            z-index: 10000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            letter-spacing: 0.3px;
+            ${type === 'success' ? 'background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); border: 2px solid #10b981; color: #065f46;' : 'background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border: 2px solid #ef4444; color: #991b1b;'}
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Reset form
+        document.getElementById('resetBtn').addEventListener('click', function() {
+        document.getElementById('registrationForm').reset();
+        document.querySelectorAll('[id^="preview_"]').forEach(preview => preview.innerHTML = '');
+        document.getElementById('owner_district').innerHTML = '<option value="" disabled selected>-- Select District --</option>';
+        document.getElementById('managersContainer').innerHTML = '';
+        managerCount = 0;
+        
+        passwordRequirements = {length: false, upper: false, lower: false, number: false, special: false};
+        updateRequirement('req-length', false);
+        updateRequirement('req-upper', false);
+        updateRequirement('req-lower', false);
+        updateRequirement('req-number', false);
+        updateRequirement('req-special', false);
+        
+        passwordMatch.style.display = 'none';
+        termsCheckbox.checked = false;
+        verificationCheckbox.checked = false;
+        registerBtn.disabled = true;
+        document.getElementById('successMessage').style.display = 'none';
+        });
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        document.getElementById('loading').style.display = 'flex';
+
+        const formData = {
+            owner_name: document.getElementById('owner_name').value,
+            owner_email: document.getElementById('owner_email').value,
+            owner_phone: document.getElementById('owner_phone').value,
+            owner_address1: document.getElementById('owner_address1').value,
+            owner_address2: document.getElementById('owner_address2').value,
+            owner_address3: document.getElementById('owner_address3').value,
+            owner_state: document.getElementById('owner_state').value,
+            owner_district: document.getElementById('owner_district').value,
+            owner_pincode: document.getElementById('owner_pincode').value,
+            owner_aadhaar_front: document.getElementById('aadhaar_front').files[0]?.name || '',
+            owner_aadhaar_back: document.getElementById('aadhaar_back').files[0]?.name || '',
+            owner_profile: document.getElementById('profile_pic').files[0]?.name || '',
+            company_name: document.getElementById('company_name').value,
+            company_cin: document.getElementById('company_cin').value,
+            company_estd: document.getElementById('company_estd').value,
+            company_moa: document.getElementById('moa_doc').files[0]?.name || '',
+            company_aoa: document.getElementById('aoa_doc').files[0]?.name || '',
+            identity_proof: `${document.getElementById('identity_id').value || 'N/A'} - ${document.getElementById('identity_proof').files[0]?.name || ''}`,
+            address_proof: `${document.getElementById('address_id').value || 'N/A'} - ${document.getElementById('address_proof').files[0]?.name || ''}`,
+            photo: `${document.getElementById('photo_id').value || 'N/A'} - ${document.getElementById('photo_doc').files[0]?.name || ''}`,
+            pan_card: `${document.getElementById('pan_id').value || 'N/A'} - ${document.getElementById('pan_card').files[0]?.name || ''}`,
+            din_doc: `${document.getElementById('din_id').value || 'N/A'} - ${document.getElementById('din_doc').files[0]?.name || ''}`,
+            dsc_doc: `${document.getElementById('dsc_id').value || 'N/A'} - ${document.getElementById('dsc_doc').files[0]?.name || ''}`,
+            office_proof: `${document.getElementById('office_id').value || 'N/A'} - ${document.getElementById('office_proof').files[0]?.name || ''}`,
+            noc_doc: `${document.getElementById('noc_id').value || 'N/A'} - ${document.getElementById('noc_doc').files[0]?.name || ''}`,
+            lease_doc: `${document.getElementById('lease_id').value || 'N/A'} - ${document.getElementById('lease_doc').files[0]?.name || ''}`,
+            declaration_doc: `${document.getElementById('declaration_id').value || 'N/A'} - ${document.getElementById('declaration_doc').files[0]?.name || ''}`,
+            dir2_form: `${document.getElementById('dir2_id').value || 'N/A'} - ${document.getElementById('dir2_form').files[0]?.name || ''}`,
+            inc9_form: `${document.getElementById('inc9_id').value || 'N/A'} - ${document.getElementById('inc9_form').files[0]?.name || ''}`,
+            managers: JSON.stringify(managers),
+            password: document.getElementById('password').value,
+            terms_accepted: true,
+            submitted_at: new Date().toISOString()
+        };
+
+        if (window.dataSdk) {
+            const result = await window.dataSdk.create(formData);
+            
+            document.getElementById('loading').style.display = 'none';
+
+            if (result.isOk) {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('registrationForm').reset();
+            document.querySelectorAll('[id^="preview_"]').forEach(preview => preview.innerHTML = '');
+            document.getElementById('managersContainer').innerHTML = '';
+            managerCount = 0;
+            
+            passwordRequirements = {length: false, upper: false, lower: false, number: false, special: false};
+            updateRequirement('req-length', false);
+            updateRequirement('req-upper', false);
+            updateRequirement('req-lower', false);
+            updateRequirement('req-number', false);
+            updateRequirement('req-special', false);
+            passwordMatch.style.display = 'none';
+            
+            termsCheckbox.checked = false;
+            verificationCheckbox.checked = false;
+            registerBtn.disabled = true;
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+            showNotification('Registration failed. Please try again.', 'error');
+            }
+        }
+        });
+
+        // Initialize Data SDK
+        const dataHandler = {
+        onDataChanged(data) {
+            // Write-only form
+        }
+        };
+
+        if (window.dataSdk) {
+        window.dataSdk.init(dataHandler);
+        }
+
+        // Initialize Element SDK
+        async function onConfigChange(config) {
+        document.getElementById('page-title').textContent = config.page_title || defaultConfig.page_title;
+        document.getElementById('page-subtitle').textContent = config.page_subtitle || defaultConfig.page_subtitle;
+        document.getElementById('submit-button-text').textContent = (config.submit_button_text || defaultConfig.submit_button_text).toUpperCase();
+        }
+
+        if (window.elementSdk) {
+        window.elementSdk.init({
+            defaultConfig,
+            onConfigChange,
+            mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) => new Map([
+            ["page_title", config.page_title || defaultConfig.page_title],
+            ["page_subtitle", config.page_subtitle || defaultConfig.page_subtitle],
+            ["submit_button_text", config.submit_button_text || defaultConfig.submit_button_text]
+            ])
+        });
+        }
+    </script>
+{% endblock content %}
+
+
