@@ -1,10 +1,17 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from datetime import datetime, date
 from farmer.models import *
 import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from hashlib import md5
+import hashlib
+import hmac
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+from .models import Farmer
+from utils.decorators import no_cache
 
 # Create your views here.
 
@@ -916,13 +923,31 @@ state_districts = {
     ]
 }
 
+def farmer_to_session(farmer):
+    session_data = {}
+
+    for field in farmer._meta.fields:
+        field_name = field.name
+        value = getattr(farmer, field_name)
+
+        if hasattr(value, "url"):
+            value = value.url
+
+        elif hasattr(value, "isoformat"):
+            value = value.isoformat()
+
+        session_data[field_name] = value
+
+    return session_data
+
+
 
 def register_farmer(request):
     if request.session.get('login_status') == 1:
         if request.session.get('user_role') == 'volunteer':
             pass
         elif request.session.get('user_role') == 'farmer':
-            return render(request, "farmer/dashboard.html", {"titile": "Farmer Dashboard - CarbonBloom"})
+            return render(request, "farmer/dashboard.html", {"titile": "Farmer Dashboard - CarbonBloom", 'base_url': request.build_absolute_uri('/')[:-1]})
         elif request.session.get('user_role') == 'admin':
             pass
         elif request.session.get('user_role') == 'company':
@@ -1072,6 +1097,9 @@ def register_farmer(request):
         else:
             return JsonResponse({"status": "warning", "message": "Profile Picture is required."})
 
+        password_hash = md5(text_data["password"].encode()).hexdigest()
+        text_data["password"] = password_hash
+
         try:
             new_farmer = Farmer(
                 name=text_data["name"],
@@ -1093,7 +1121,81 @@ def register_farmer(request):
             )
             new_farmer.save()
 
+            try:
+                farmer = Farmer.objects.get(phone=text_data["phone"])
+
+                farmer_data = farmer_to_session(farmer)
+
+                for key, value in farmer_data.items():
+                    request.session[key] = value
+                
+                request.session["login_status"] = 1
+                request.session["user_role"] = "farmer"
+                request.session["login_time"] = str(timezone.now())
+                request.session.set_expiry(60 * 60 * 12)
+                request.session.modified = True
+
+            except Farmer.DoesNotExist:
+                return JsonResponse({
+                    "status": "not-found",
+                    "message": "No farmer found with the provided phone number after registration."
+                })
+
             return JsonResponse({"status": "success", "message": "Registration successful. You can now log in."})
         except Exception as e:
             return JsonResponse({"status": "error", "message": f"An error occurred during registration: {str(e)}"})
 
+@csrf_exempt
+def login_view(request):
+
+    if request.session.get('login_status') == 1:
+        if request.session.get('user_role') == 'volunteer':
+            pass
+        elif request.session.get('user_role') == 'farmer':
+            return render(request, "farmer/dashboard.html", {"titile": "Farmer Dashboard - CarbonBloom", 'base_url': request.build_absolute_uri('/')[:-1]})
+        elif request.session.get('user_role') == 'admin':
+            pass
+        elif request.session.get('user_role') == 'company':
+            pass
+
+    if request.method == "GET":
+        return render(request, "frm_login.html")
+
+    phone = request.POST.get("phone")
+    password = request.POST.get("password")
+
+    if not phone or not password:
+        return JsonResponse({
+            "status": "reject",
+            "message": "Phone number and password are required."
+        })
+
+    try:
+        farmer = Farmer.objects.get(phone=phone)
+    except Farmer.DoesNotExist:
+        return JsonResponse({
+            "status": "not-found",
+            "message": "No farmer found with the provided phone number."
+        })
+
+    input_hash = hashlib.md5(password.encode()).hexdigest()
+    is_valid = hmac.compare_digest(input_hash, farmer.password)
+
+    if not is_valid:
+        return JsonResponse({
+            "status": "reject",
+            "message": "Incorrect password."
+        })
+    
+    farmer_data = farmer_to_session(farmer)
+
+    for key, value in farmer_data.items():
+        request.session[key] = value
+
+    request.session["login_status"] = 1
+    request.session["user_role"] = "farmer"
+    request.session["login_time"] = str(timezone.now())
+    request.session.set_expiry(60 * 60 * 12)
+    request.session.modified = True
+
+    return JsonResponse({"status": "success"})

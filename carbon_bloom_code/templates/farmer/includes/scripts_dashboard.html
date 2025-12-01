@@ -1,0 +1,33 @@
+{% load static %}
+
+<script src="{% static 'js/farmer/dashboard.js' %}"></script>
+
+<script>
+
+    const base_url = "{{ base_url }}";
+
+    function updateGreeting() {
+        const now = new Date();
+        const hour = now.getHours();
+        let greeting = "";
+
+        if (hour >= 5 && hour < 12) {
+            greeting = "Good Morning";
+        } else if (hour >= 12 && hour < 17) {
+            greeting = "Good Afternoon";
+        } else {
+            greeting = "Good Evening";
+        }
+
+        document.getElementById("greeting-text").innerHTML =
+            `${greeting}, {{ farmer.name }} 👋`;
+    }
+
+    updateGreeting();
+
+    loadSOCChart(
+        {{ soc.labels|safe }},
+        {{ soc.values|safe }}
+    );
+
+</script>

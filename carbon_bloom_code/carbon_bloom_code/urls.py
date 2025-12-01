@@ -31,8 +31,10 @@ urlpatterns = [
     path('farmer_register/', fviews.register_farmer, name='register_farmer'),
     path('registration_company/', views.reg_com, name='reg_comp'),
     path('volunteer_apllication/', views.vol_apply, name='vol_apply'),
+    path('frm_login_auth/', fviews.login_view, name='frm_login_auth'),
+    path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
+    path("logout/", views.logout_view, name="logout"),
     # path('company_dashboard/', cviews.com_dashboard, name='dash_com'),
-    # path('farmer_dashboard/', views.frm_dashboard, name='dash_frm'),
     # path('volunteer_dashboard/', views.vol_dashboard, name='dash_vol'),
 ]
 

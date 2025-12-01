@@ -1,0 +1,102 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ title }}</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Theme CSS -->
+    <link rel="stylesheet" href="{% static 'css/farmer/theme.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}">
+
+</head>
+
+<body class="bg-gray-50 min-h-screen text-gray-800">
+
+    <!-- FULL HEADER -->
+    <header class="w-full relative">
+
+        <!-- GREEN HEADER BACKGROUND -->
+        <div class="hero-gradient w-full h-32 sm:h-[70px] rounded-b-3xl"></div>
+
+
+        <!-- NAVIGATION BAR -->
+        <div class="absolute top-0 left-0 w-full">
+            <div class="flex justify-between items-center px-4 sm:px-6 py-3">
+
+                <!-- Left: Logo + Tagline -->
+                <div class="flex items-center gap-3">
+
+                    <!-- Logo Image -->
+                    <img src="{% static 'img/logo.png' %}" class="w-12 h-12 rounded-xl">
+
+                    <!-- Logo Text -->
+                    <div class="leading-tight">
+                        <span class="text-xl font-bold flex items-center">
+                            <span class="text-black">Carbon</span><span class="text-green-700 ml-1">Bloom</span>
+                        </span>
+
+                        <span class="text-xs text-gray-100 italic block -mt-1">
+                            Cultivating innovation, regenerating the planet
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Right: Navigation -->
+                <div class="flex items-center gap-5 text-white text-sm font-medium">
+
+                    <a href="/farmer_dashboard/" class="hover:opacity-80">Dashboard</a>
+
+                    <a href="javascript:void(0);" class="hover:opacity-80">Profile</a>
+
+                    <a href="{% url 'logout' %}" class="hover:opacity-80">Logout</a>
+
+                    <!-- Avatar -->
+                    <div class="w-10 h-10 rounded-full overflow-hidden bg-white/40 backdrop-blur border border-white/30 flex items-center justify-center">
+                        {% comment %} {% if request.session.profile_image %}
+                            <img src="{{ request.session.profile_image }}" class="w-full h-full object-cover">
+                        {% else %} {% endcomment %}
+                            <i class="fa-solid fa-user text-white text-xl"></i>
+                        {% comment %} {% endif %} {% endcomment %}
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+
+
+    <!-- PAGE CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-[#2E7D32] mt-10 text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2 font-semibold">CarbonBloom</p>
+            <p class="text-sm opacity-90">Authentic carbon credits from small landholders.</p>
+            <p class="text-sm opacity-75 mt-4">© 2024 CarbonBloom. All rights reserved.</p>
+        </div> 
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

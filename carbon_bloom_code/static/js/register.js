@@ -1,5 +1,5 @@
-// const base_url = "http://127.0.0.1:8000";
-const base_url = "https://carbon-bloom.onrender.com";
+const base_url = "http://127.0.0.1:8000";
+// const base_url = "https://carbon-bloom.onrender.com";
 
 function validate_data(data, formID) {
     let form = document.getElementById(formID);
@@ -359,9 +359,9 @@ async function handleFormSubmit(e) {
                     icon: "success",
                     button: "OK",
                 }).then(() => {
-                    window.location.reload();
-                    // window.location.href = base_url + '/farmer/dashboard/';
-                    showMessage("Farmer Created.", true);
+                    // window.location.reload();
+                    window.location.href = base_url + 'farmer_dashboard/';
+                    // showMessage("Farmer Created.", true);
                 });
                 
                 $('#register_farmer')[0].reset();

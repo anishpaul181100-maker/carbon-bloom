@@ -1,0 +1,35 @@
+<aside class="lg:col-span-4 space-y-6">
+
+    <div class="bg-white rounded-xl shadow-sm p-5 card-hover">
+        <h3 class="font-semibold mb-3">Practice Overview</h3>
+
+        {% for p in practices %}
+        <div class="flex justify-between items-center py-2">
+            <div>
+                <p class="font-medium">{{ p.name }}</p>
+                <p class="text-xs text-gray-400">{{ p.fields }} fields</p>
+            </div>
+            <span class="px-2 py-1 rounded bg-green-50 text-green-700 text-xs">{{ p.status }}</span>
+        </div>
+        {% empty %}
+        <p class="text-gray-400 text-sm">No practices found.</p>
+        {% endfor %}
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-5 card-hover">
+        <h3 class="font-semibold mb-3">Quick Actions</h3>
+
+        <button class="w-full py-2 bg-green-600 text-white rounded-lg mb-3 hover:opacity-90">
+            Upload Field Photos
+        </button>
+
+        <button class="w-full py-2 bg-green-700 text-white rounded-lg mb-3 hover:opacity-90">
+            Request Soil Collection
+        </button>
+
+        <button class="w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+            Download Latest Report
+        </button>
+    </div>
+
+</aside>

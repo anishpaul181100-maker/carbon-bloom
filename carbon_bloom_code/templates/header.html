@@ -87,9 +87,22 @@
 <header class="w-full bg-white shadow-sm sticky top-0 z-50">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
    <div class="flex justify-between items-center">
-    <div>
-     <div class="flex items-center gap-2"><span id="logo-text" class="text-xl font-bold flex" style="color:#2E7D32;"> <img src="{% static 'img/logo.png' %}" class="size-12" style="border-radius: 40%;"> <span class="ml-2 mt-3"><span class="text-black">Carbon</span>Bloom</span> </span>
-     </div><span class="text-sm font-medium text-gray-500">Cultivating innovation regenerating the planet</span>
+    <div class="flex items-center gap-3">
+
+        <!-- Logo Image -->
+        <img src="{% static 'img/logo.png' %}" class="w-12 h-12 rounded-xl">
+
+        <!-- Logo Text -->
+        <div class="leading-tight">
+            <span class="text-xl font-bold flex items-center">
+                <span class="text-black">Carbon</span><span class="text-green-700 ml-1">Bloom</span>
+            </span>
+
+            <span class="text-xs text-100 italic block -mt-1" style="color: #666666;">
+                Cultivating innovation, regenerating the planet
+            </span>
+        </div>
+
     </div>
     <div class="hidden md:flex gap-6 items-center"><a href="#about" class="text-gray-700 hover:text-[#2E7D32]">About</a> <a href="#how-it-works" class="text-gray-700 hover:text-[#2E7D32]">How It Works</a>
      <div class="login-dropdown"><a href="#login" class="text-gray-700 hover:text-[#2E7D32]">Login</a>
