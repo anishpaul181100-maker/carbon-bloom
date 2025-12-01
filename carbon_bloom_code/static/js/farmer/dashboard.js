@@ -20,6 +20,11 @@ function loadSOCChart(labels, values) {
 // File upload preview
 document.addEventListener("change", function (e) {
     if (e.target.id === "file-photo") {
-        alert("Photo selected. Upload logic goes here.");
+        swal({
+            title: "File Selected",
+            text: "You have selected a file: " + e.target.files[0].name,
+            icon: "success",
+            button: "OK",
+        });
     }
 });

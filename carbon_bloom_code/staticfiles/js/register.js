@@ -366,11 +366,11 @@ async function handleFormSubmit(e) {
                 
                 $('#register_farmer')[0].reset();
             } else {
-                alert('Error registering farmer: ' + response.message);
+                swal("Error!", response.message || "An error occurred while registering the farmer. Please try again.", "error");
             }
         },
         error: function (xhr, status, error) {
-            alert('Error registering farmer: ' + error);
+            swal("Error!", "An error occurred while registering the farmer. Please try again.", "error");
         }
     });
 

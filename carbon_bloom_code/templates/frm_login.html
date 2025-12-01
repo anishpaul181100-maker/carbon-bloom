@@ -134,17 +134,17 @@
                             window.location.href = "{{base_url}}/farmer_dashboard/";
                         } 
                         else if (data.status === "not-found") {
-                            alert("No account found for this phone number.");
+                            swal("Error!", "Farmer not found. Please check your credentials or register.", "error");
                         } 
                         else if (data.status === "reject") {
-                            alert("Incorrect credentials. Please try again.");
+                            swal("Error!", "Your registration is still under review. Please wait for approval.", "error");
                         }
 
                         loginButton.disabled = false;
                         loginButton.innerText = "Login to Portal";
                     })
                     .catch(err => {
-                        alert("Network error. Please try again.");
+                        swal("Error!", "An error occurred while processing your request. Please try again.", "error");
                         loginButton.disabled = false;
                         loginButton.innerText = "Login to Portal";
                     });
