@@ -359,9 +359,9 @@ async function handleFormSubmit(e) {
                     icon: "success",
                     button: "OK",
                 }).then(() => {
-                    window.location.reload();
-                    // window.location.href = base_url + '/farmer/dashboard/';
-                    showMessage("Farmer Created.", true);
+                    // window.location.reload();
+                    window.location.href = base_url + 'farmer_dashboard/';
+                    // showMessage("Farmer Created.", true);
                 });
                 
                 $('#register_farmer')[0].reset();

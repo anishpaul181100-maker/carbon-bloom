@@ -1,5 +1,5 @@
-const base_url = "http://127.0.0.1:8000";
-// const base_url = "https://carbon-bloom.onrender.com";
+// const base_url = "http://127.0.0.1:8000";
+const base_url = "https://carbon-bloom.onrender.com";
 
 function validate_data(data, formID) {
     let form = document.getElementById(formID);

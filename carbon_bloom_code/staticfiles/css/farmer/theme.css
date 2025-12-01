@@ -1,0 +1,118 @@
+body,
+* {
+    box-sizing: border-box;
+}
+
+.hero-gradient {
+    background: rgb(28, 143, 181);
+}
+
+.card-hover {
+    transition: 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(46, 125, 50, 0.2);
+}
+
+.btn-primary {
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+#mobile-menu {
+    transition: 0.3s ease;
+}
+
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+    aspect-ratio: 3/2;
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+}
+
+.image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.delete-image-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.delete-image-btn:hover {
+    background: rgba(220, 38, 38, 0.9);
+}
+
+.profile-preview-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #d1d5db;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+}
+
+.profile-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #22c55e;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+.file-input-label:hover {
+    background: #16a34a;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .image-preview-container {
+        max-width: 100%;
+    }
+}
